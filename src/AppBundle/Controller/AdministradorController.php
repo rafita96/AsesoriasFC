@@ -15,4 +15,13 @@ class AdministradorController extends Controller
     {
     	return new Response("Hola Admin");
     }
+
+    /**
+     * @Route("/admin", name="admin_home")
+     */
+    public function homeAction()
+    {
+    	$name = "Manuel";
+    	return $this->render('admin/admin_home.html.twig', array('name' => $name));
+    }
 }
