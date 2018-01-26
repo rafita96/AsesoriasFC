@@ -10,6 +10,7 @@ parameters:
 
 framework:
     #esi: ~
+    templating: { engines: ['twig'] }
     translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:

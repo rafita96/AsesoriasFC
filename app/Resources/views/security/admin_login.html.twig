@@ -14,22 +14,24 @@
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form class="form-signin" action="{{ path('login') }}" method="post">
+        <form class="form-signin" action="{{ path('admin_check') }}" method="post">
             <h2 class="form-signin-heading">{{"Asesorías FC"}}</h2>
-            <input type="hidden" id="password" name="_password" />
-            <label for="username" class="sr-only">{{"Matrícula"}}</label>
-
-            <div class="input-group mb-3">
+            <label for="username" class="sr-only">{{"Usuario"}}</label>
                 <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" placeholder="Matrícula" aria-label="Recipient" />
+
+            <label for="username" class="sr-only">{{"Contraseña"}}</label>
+            <input class="form-control" type="password" id="password" name="_password" placeholder="Contraseña" aria-label="Recipient"/>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+           
             {#
                 If you want to control the URL the user
                 is redirected to on success (more details below)
                 <input type="hidden" name="_target_path" value="/account" />
             #}
-                <div class="input-group-append">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-                </div>
-            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+
         </form>
     </div>
 </div>
