@@ -23,6 +23,7 @@
         "php": ">=5.5.9",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
@@ -59,7 +60,7 @@
         "symfony-app-dir": "app",
         "symfony-bin-dir": "bin",
         "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
+        "symfony-web-dir": "public_html",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
