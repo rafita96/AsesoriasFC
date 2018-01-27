@@ -28,7 +28,3 @@ admin_login:
 admin_check:
     path:  /admin/login_check
     defaults: { _controller: FOSUserBundle:Security:check }
-
-admin_logout:
-    path:  /admin/logout
-    defaults: { _controller: FOSUserBundle:Security:logout }

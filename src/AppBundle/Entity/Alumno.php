@@ -11,22 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="alumno")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AlumnoRepository")
  */
-class Alumno implements UserInterface, \Serializable
+class Alumno
 {
-
-    private $username;
-    private $password;
-    private $salt;
-    private $roles;
-
-    public function __construct($username, $password, $salt, array $roles)
-    {
-        $this->username = $username;
-        $this->password = "000";
-        $this->salt = $salt;
-        $this->roles = $roles;
-    }
-
     /**
      * @var int
      *
@@ -169,54 +155,5 @@ class Alumno implements UserInterface, \Serializable
     public function getAMaterno()
     {
         return $this->aMaterno;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
     }
 }
