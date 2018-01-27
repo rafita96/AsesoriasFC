@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
 
 use AppBundle\Entity\Alumno;
-use AppBundle\Form\AlumnoType;
+use AppBundle\Form\LoginType;
 
 
 class SecurityController extends BaseController {
@@ -45,7 +45,7 @@ class SecurityController extends BaseController {
         }
         $user = new Alumno();
 
-        $form = $this->createForm(AlumnoType::class, $user);
+        $form = $this->createForm(LoginType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
