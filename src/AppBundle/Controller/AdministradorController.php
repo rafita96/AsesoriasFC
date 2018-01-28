@@ -8,13 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdministradorController extends Controller
 {
-	/**
-     * @Route("/admin/login", name="admin_login")
-     */
-    public function loginAction()
-    {
-    	return new Response("Hola Admin");
-    }
 
     /**
      * @Route("/admin", name="admin_home")
@@ -22,23 +15,29 @@ class AdministradorController extends Controller
     public function homeAction()
     {
     	$name = "Manuel";
-    	return $this->render('admin/home.html.twig', array('name' => $name));
+    	return $this->render('admin/home.html.twig', array('name' => $name)); 
     }
 
     /**
-     * @Route("/admin/asesores", name="asesores")
+     * @Route("/admin/asesores", name="admin_asesores")
      */
     public function asesoresAction()
     {
     	$periodo = "2018-1";
     	$a1 = array(
+    		"matricula" => "343173",
     	    "nombre" => "Manuel",
     	    "apaterno" => "Carrillo",
     	    "amaterno" => "Leon",
     	);
+    	$a2 = array(
+    		"matricula" => "342460",
+    	    "nombre" => "Rafael",
+    	    "apaterno" => "Peralta",
+    	    "amaterno" => "Blanco",
+    	);
 
-    	$a1 = ["Manuel","Carrillo","Leon"];
-    	$asesores = [$a1];
-    	return $this->render('admin/asesores.html.twig');
+    	$asesores = [$a1,$a2];
+    	return $this->render('admin/asesores.html.twig', array('asesores' => $asesores,'periodo' => $periodo));
     }
 }
