@@ -16,19 +16,18 @@ class RegistroController extends Controller
      */
     public function defaultAction(Request $request)
     {
-        $alumno = new Alumno();
+        $alumno = $this->getUser();
 
         $form = $this->createForm(AlumnoType::class, $alumno);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $alumno = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($alumno);
             $em->flush();
 
-            return new Response("Éxito");
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('registro/registro.html.twig', array(

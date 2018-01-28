@@ -40,18 +40,4 @@ class SecurityController extends BaseController {
     {   
         return $this->render('security/login.html.twig');
     }
-
-    /**
-     * @Route("/session_logout", name="session_logout")
-     */
-    public function sessionLogoutAction(Request $request)
-    {   
-        $session = $request->getSession();
-        
-        if($session->get('matricula') !== null){
-            $session->set('matricula', null);
-            return $this->redirectToRoute('login');
-        }
-        return $this->redirectToRoute('homepage');
-    }
 }
