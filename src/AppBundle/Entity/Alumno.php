@@ -32,21 +32,21 @@ class Alumno implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=true)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="aPaterno", type="string", length=255, nullable=true)
+     * @ORM\Column(name="aPaterno", type="string", length=100, nullable=true)
      */
     private $aPaterno;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="aMaterno", type="string", length=255, nullable=true)
+     * @ORM\Column(name="aMaterno", type="string", length=100, nullable=true)
      */
     private $aMaterno;
 
@@ -156,7 +156,7 @@ class Alumno implements UserInterface, \Serializable
     {
         return $this->aMaterno;
     }
-
+    
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
