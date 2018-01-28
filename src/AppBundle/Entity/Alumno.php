@@ -51,7 +51,7 @@ class Alumno implements UserInterface, \Serializable
     private $aMaterno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Horario", mappedBy="cita", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Horario", mappedBy="alumno", cascade={"persist"})
      */
     private $horarios;
 

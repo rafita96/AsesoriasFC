@@ -19,14 +19,14 @@ class CitaController extends Controller
         $cita = new Cita();
 
         // dummy
-        $horario1 = new Horario();
-        $horario1->setDia(1);
-        $horario1->setHorario('8:00 - 10:00');
-        $cita->addHorario($horario1);
-        $horario2 = new Horario();
-        $horario2->setDia(0);
-        $horario2->setHorario('8:00 - 10:00');
-        $cita->addHorario($horario2);
+        // $horario1 = new Horario();
+        // $horario1->setDia(1);
+        // $horario1->setHorario('8:00 - 10:00');
+        // $cita->addHorario($horario1);
+        // $horario2 = new Horario();
+        // $horario2->setDia(0);
+        // $horario2->setHorario('8:00 - 10:00');
+        // $cita->addHorario($horario2);
 
         $form = $this->createForm(CitaType::class, $cita);
         $form->handleRequest($request);

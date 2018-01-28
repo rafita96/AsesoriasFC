@@ -19,7 +19,7 @@
                 <a class="navbar-brand" href="#">Asesores</a>
             {% endif %}
 
-            {% if is_granted('ROLE_ASESOR') %}
+            {% if is_granted('ROLE_USER') and app.user.asesor %}
                 <a class="navbar-brand" href="#">Solicitudes</a>
             {% endif %}
 
