@@ -50,6 +50,17 @@ class Alumno implements UserInterface, \Serializable
      */
     private $aMaterno;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Horario", mappedBy="cita", cascade={"persist"})
+     */
+    private $horarios;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
+     */
+    private $asesor;
 
     /**
      * Get id
@@ -164,6 +175,7 @@ class Alumno implements UserInterface, \Serializable
 
     public function __construct()
     {
+        $this->horarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
@@ -246,5 +258,63 @@ class Alumno implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Add horario
+     *
+     * @param \AppBundle\Entity\Horario $horario
+     *
+     * @return Alumno
+     */
+    public function addHorario(\AppBundle\Entity\Horario $horario)
+    {
+        $this->horarios[] = $horario;
+
+        return $this;
+    }
+
+    /**
+     * Remove horario
+     *
+     * @param \AppBundle\Entity\Horario $horario
+     */
+    public function removeHorario(\AppBundle\Entity\Horario $horario)
+    {
+        $this->horarios->removeElement($horario);
+    }
+
+    /**
+     * Get horarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHorarios()
+    {
+        return $this->horarios;
+    }
+
+    /**
+     * Set asesor
+     *
+     * @param boolean $asesor
+     *
+     * @return Alumno
+     */
+    public function setAsesor($asesor)
+    {
+        $this->asesor = $asesor;
+
+        return $this;
+    }
+
+    /**
+     * Get asesor
+     *
+     * @return boolean
+     */
+    public function getAsesor()
+    {
+        return $this->asesor;
     }
 }

@@ -56,13 +56,6 @@ class Cita
      */
     private $estado;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Horario", mappedBy="cita", cascade={"persist"})
-     */
-    private $horarios;
-
-
-
 
     /**
      * Get id
@@ -168,47 +161,6 @@ class Cita
     public function getCantidad()
     {
         return $this->cantidad;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->horarios = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     *
-     * @return Cita
-     */
-    public function addHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios[] = $horario;
-
-        return $this;
-    }
-
-    /**
-     * Remove horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     */
-    public function removeHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios->removeElement($horario);
-    }
-
-    /**
-     * Get horarios
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getHorarios()
-    {
-        return $this->horarios;
     }
 
     /**

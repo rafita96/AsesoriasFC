@@ -36,10 +36,10 @@ class Horario
     private $horario;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Cita", inversedBy="horarios")
-     * @ORM\JoinColumn(name="cita_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="horarios")
+     * @ORM\JoinColumn(name="alumno", referencedColumnName="id")
      */
-    private $cita;
+    private $alumno;
 
 
     /**
@@ -101,26 +101,26 @@ class Horario
     }
 
     /**
-     * Set cita
+     * Set alumno
      *
-     * @param \AppBundle\Entity\Cita $cita
+     * @param \AppBundle\Entity\Alumno $alumno
      *
      * @return Horario
      */
-    public function setCita(\AppBundle\Entity\Cita $cita = null)
+    public function setAlumno(\AppBundle\Entity\Alumno $alumno = null)
     {
-        $this->cita = $cita;
+        $this->alumno = $alumno;
 
         return $this;
     }
 
     /**
-     * Get cita
+     * Get alumno
      *
-     * @return \AppBundle\Entity\Cita
+     * @return \AppBundle\Entity\Alumno
      */
-    public function getCita()
+    public function getAlumno()
     {
-        return $this->cita;
+        return $this->alumno;
     }
 }
