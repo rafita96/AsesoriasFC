@@ -6,7 +6,6 @@ security:
         AppBundle\Entity\Alumno: bcrypt
 
     role_hierarchy:
-        ROLE_ASESOR: ROLE_USER
         ROLE_ADMIN: ROLE_ASESOR
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
