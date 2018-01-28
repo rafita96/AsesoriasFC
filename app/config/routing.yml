@@ -7,16 +7,24 @@ fos_user_security:
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /perfil
+    prefix: /admin/perfil
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /registro
+    prefix: /admin/registro
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /reset
+    prefix: /admin/reset
 
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /cambiarClave
+    prefix: /admin/cambiarClave
+
+admin_login:
+    path:  /admin/login
+    defaults: { _controller: FOSUserBundle:Security:login }
+
+admin_check:
+    path:  /admin/login_check
+    defaults: { _controller: FOSUserBundle:Security:check }

@@ -33,3 +33,18 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Security\Authentication\Provider\WsseProvider:
+        arguments:
+            $cachePool: '@cache.app'
+        public: false
+
+    AppBundle\Security\Firewall\WsseListener:
+        arguments: ['@security.token_storage', '@security.authentication.manager']
+        public: false
+
+    AppBundle\Security\User\WebserviceUserProvider:
+        arguments:
+            $em: "@doctrine.orm.entity_manager"
+
+    Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface: '@security.authentication.manager'
