@@ -60,7 +60,7 @@ class Alumno implements UserInterface, \Serializable
      *
      * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
      */
-    private $asesor;
+    private $asesor = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
