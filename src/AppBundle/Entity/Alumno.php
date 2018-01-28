@@ -212,10 +212,39 @@ class Alumno implements UserInterface, \Serializable
     {
         list (
             $this->id,
-            $this->username,
+            $this->matricula,
             $this->matricula,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    public function __toString()
+    {
+        return '{matricula:'.$this->matricula.'}';
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Alumno
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

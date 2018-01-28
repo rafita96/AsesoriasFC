@@ -52,7 +52,6 @@ security:
                 authenticator: AppBundle\Security\MyAuthenticator
                 login_path: login 
                 check_path: login
-                default_target_path: /
 
             logout: true
             anonymous: true

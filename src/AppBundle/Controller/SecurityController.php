@@ -38,38 +38,7 @@ class SecurityController extends BaseController {
      */
     public function newAction(Request $request)
     {   
-        $session = $request->getSession();
-        
-        if($session->get('matricula') !== null){
-            return $this->redirectToRoute('homepage');
-        }
-        $user = new Alumno();
-
-        $form = $this->createForm(LoginType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $repository = $this->getDoctrine()->getRepository(Alumno::class);
-            $realUser = $repository->findByMatricula($user->getMatricula());
-
-            $session->invalidate();
-            $session->set('matricula', $user->getMatricula());
-
-            if($realUser == null){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-
-                $em->flush();
-                return new Response("Guardado");
-            }
-
-            return new Response("Existe, entonces hay que guardarlo en la sesion.");
-
-        }
-
-        return $this->render('security/registro.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->render('security/login.html.twig');
     }
 
     /**

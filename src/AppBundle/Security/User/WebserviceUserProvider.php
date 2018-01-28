@@ -8,13 +8,33 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
+use Doctrine\ORM\EntityManager;
+
 class WebserviceUserProvider implements UserProviderInterface
-{
+{   
+    protected $em;
+
+    public function __construct(EntityManager $em){
+        $this->em = $em;
+    }
+
     public function loadUserByUsername($username)
     {
         // make a call to your webservice here
+        $repository = $this->em->getRepository(Alumno::class);
+        $alumno = $repository->findOneByMatricula($username);
+
+        if($alumno){
+            return $alumno;
+        }
+
         $alumno = new Alumno();
         $alumno->setMatricula($username);
+        $alumno->setIsActive(true);
+
+        $this->em->persist($alumno);
+        $this->em->flush();
+
         return $alumno;
 
         throw new UsernameNotFoundException(
