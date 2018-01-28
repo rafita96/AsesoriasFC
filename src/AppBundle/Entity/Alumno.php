@@ -60,7 +60,13 @@ class Alumno implements UserInterface, \Serializable
      *
      * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
      */
-    private $asesor;
+    private $asesor = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
+     */
+    private $user;
 
     /**
      * @ORM\OneToMany(targetEntity="Cita", mappedBy="alumno, asesor", cascade={"persist"})
@@ -333,7 +339,19 @@ class Alumno implements UserInterface, \Serializable
     public function addCita(\AppBundle\Entity\Cita $cita)
     {
         $this->citas[] = $cita;
+        return $this;
+    }
 
+    /**
+     * Set user.
+     *
+     * @param \AppBundle\Entity\User|null $user
+     *
+     * @return Alumno
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
         return $this;
     }
 
@@ -355,5 +373,15 @@ class Alumno implements UserInterface, \Serializable
     public function getCitas()
     {
         return $this->citas;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

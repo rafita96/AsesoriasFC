@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Registro</h3>
-                {{ form_start(form) }}
-                {{ form_errors(form) }}
-                {{ form_end(form) }}
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Perfil</h3>
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_end(form) }}
         </div>
     </div>
+
 {% endblock %}

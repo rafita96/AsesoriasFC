@@ -40,4 +40,14 @@ class CitaController extends Controller
         ));
     }
 
+    /**
+     * @Route("/citas/", name="citas")
+     */
+    public function verAction(Request $request){
+        $alumno = $this->getUser();
+
+        return $this->render('cita/lista.html.twig', array(
+            'citas' => $alumno->getCitas(),
+        ));
+    }
 }

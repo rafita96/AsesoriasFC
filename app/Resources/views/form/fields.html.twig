@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{# import "_self" as the form theme #}
+
+{# make the form fragment customization #}
+{% block form_row %}
+    {% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block form_widget %}
+    {% set type = type|default('text') %}
+    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
+{% endblock %}
+
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <ul>
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
