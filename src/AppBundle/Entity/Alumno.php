@@ -64,7 +64,7 @@ class Alumno implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     private $user;
 
