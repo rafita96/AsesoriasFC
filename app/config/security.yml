@@ -6,7 +6,8 @@ security:
         AppBundle\Entity\Alumno: bcrypt
 
     role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
+        ROLE_ASESOR: ROLE_USER
+        ROLE_ADMIN: ROLE_ASESOR
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
