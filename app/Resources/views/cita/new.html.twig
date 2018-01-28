@@ -7,12 +7,12 @@
         {{ form_row(form.expiracion) }}
         {{ form_row(form.cantidad) }}
 
-        <h3>Horario</h3>
+        {# <h3>Horario</h3>
         <ul class="horarios" data-prototype="{{ form_widget(form.horarios.vars.prototype)|e('html_attr') }}">
             {% for horario in form.horarios %}
                 <li>{{ form_row(horario.horario) }}</li>
             {% endfor %}
-        </ul>
+        </ul>#}
     {{ form_end(form) }}
 
     <script>

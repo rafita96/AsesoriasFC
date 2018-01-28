@@ -16,13 +16,13 @@ class CitaType extends AbstractType
     {
         $builder->add('tema')->add('materia')->add('expiracion')->add('cantidad');
 
-        $builder->add('horarios', CollectionType::class, array(
-            'entry_type' => HorarioType::class,
-            'entry_options' => array('label' => false),
-            'allow_add' => true,
-            'by_reference' => false,
-            'allow_delete' => true,
-        ));
+        // $builder->add('horarios', CollectionType::class, array(
+        //     'entry_type' => HorarioType::class,
+        //     'entry_options' => array('label' => false),
+        //     'allow_add' => true,
+        //     'by_reference' => false,
+        //     'allow_delete' => true,
+        // ));
     }/**
      * {@inheritdoc}
      */

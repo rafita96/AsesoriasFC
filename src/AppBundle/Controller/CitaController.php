@@ -32,7 +32,7 @@ class CitaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+        
         }
 
         return $this->render('cita/new.html.twig', array(
