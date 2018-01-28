@@ -3,6 +3,7 @@
 security:
     encoders:
         AppBundle\Entity\User: bcrypt
+        AppBundle\Entity\Alumno: bcrypt
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
@@ -12,6 +13,9 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
+
+        user_db:
+            id: AppBundle\Security\User\WebserviceUserProvider
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -39,6 +43,21 @@ security:
 
             context: my_context
 
+        wsse_secured:
+            pattern: ^/
+            wsse: true
+
+            provider: user_db
+            simple_form:
+                authenticator: AppBundle\Security\MyAuthenticator
+                login_path: login 
+                check_path: login
+                default_target_path: /
+
+            logout: true
+            anonymous: true
+
+            context: my_context
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
             #http_basic: ~
 
@@ -51,3 +70,4 @@ security:
         - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/, role: ROLE_USER }
