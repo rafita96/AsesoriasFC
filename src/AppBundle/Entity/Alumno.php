@@ -63,6 +63,12 @@ class Alumno implements UserInterface, \Serializable
     private $asesor;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return int
@@ -316,5 +322,29 @@ class Alumno implements UserInterface, \Serializable
     public function getAsesor()
     {
         return $this->asesor;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \AppBundle\Entity\User|null $user
+     *
+     * @return Alumno
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
