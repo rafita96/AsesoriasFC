@@ -63,6 +63,11 @@ class Alumno implements UserInterface, \Serializable
     private $asesor;
 
     /**
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="alumno, asesor", cascade={"persist"})
+     */
+    private $citas;
+
+    /**
      * Get id
      *
      * @return int
@@ -316,5 +321,39 @@ class Alumno implements UserInterface, \Serializable
     public function getAsesor()
     {
         return $this->asesor;
+    }
+
+    /**
+     * Add cita
+     *
+     * @param \AppBundle\Entity\Cita $cita
+     *
+     * @return Alumno
+     */
+    public function addCita(\AppBundle\Entity\Cita $cita)
+    {
+        $this->citas[] = $cita;
+
+        return $this;
+    }
+
+    /**
+     * Remove cita
+     *
+     * @param \AppBundle\Entity\Cita $cita
+     */
+    public function removeCita(\AppBundle\Entity\Cita $cita)
+    {
+        $this->citas->removeElement($cita);
+    }
+
+    /**
+     * Get citas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCitas()
+    {
+        return $this->citas;
     }
 }
