@@ -4,13 +4,13 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+    <form class="form-signin" action="{{ path("admin_check") }}" method="post">
         {% if csrf_token %}
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
-            <label for="username">{{ 'Matrícula' }}</label>
+        <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión (Administrador)</h1>
+            <label for="username">{{ 'Usuario' }}</label>
             <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
 
             <label for="password">{{ 'security.login.password'|trans }}</label>

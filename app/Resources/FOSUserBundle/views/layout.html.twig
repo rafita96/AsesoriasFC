@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/login/signin.css') }}">
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
 {% block body %}
-    <div class="container">
-        {% block fos_user_content %}{% endblock %}
-    </div>
+    {% block fos_user_content %}{% endblock %}
 {% endblock %}

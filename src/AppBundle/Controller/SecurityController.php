@@ -28,7 +28,7 @@ class SecurityController extends BaseController {
 
         $request = $this->requestStack->getCurrentRequest();
         $requestAttributes = $request->attributes;
-        $template = sprintf('security/admin_login.html.twig');
+        $template = sprintf('FOSUserBundle:Security:login.html.twig');
         
         return $this->container->get('templating')->renderResponse($template, $data);
     }
