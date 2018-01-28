@@ -1,0 +1,27 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<body class="text-center">
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form class="form-signin" action="{{ path("admin_check") }}" method="post">
+        {% if csrf_token %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% endif %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión (Administrador)</h1>
+            <label for="username">{{ 'Usuario' }}</label>
+            <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+
+            <label for="password">{{ 'security.login.password'|trans }}</label>
+            <input class="form-control" type="password" id="password" name="_password" required="required" />
+
+        <div class="form-check">
+            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+        </div>
+
+
+        <input type="submit" id="_submit" class="btn btn-lg btn-success btn-block" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+    </form>
+</body>

@@ -5,20 +5,15 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AlumnoType extends AbstractType
+class LoginType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')
-                ->add('aPaterno')
-                ->add('aMaterno')
-                ->add('save', SubmitType::class, array('label' => 'Continuar'))
-        ;
+        $builder->add('matricula');
     }/**
      * {@inheritdoc}
      */
