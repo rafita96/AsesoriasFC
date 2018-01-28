@@ -31,11 +31,18 @@
                 <a class="navbar-brand" href="#">Citas</a>
             {% endif %}
             <a class="navbar-brand" href="#">Perfil</a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('admin_asesores') }}">Asesores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Solicitudes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{"Cerrar Sesión"}}</a>
                     </li>
