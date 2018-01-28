@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class CitaController extends Controller
 {
     /**
-     * @Route("citas/new")
+     * @Route("/citas/new", name="citas_new")
      */
     public function newAction(Request $request)
     {
