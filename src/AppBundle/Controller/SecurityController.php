@@ -28,7 +28,7 @@ class SecurityController extends BaseController {
 
         $request = $this->requestStack->getCurrentRequest();
         $requestAttributes = $request->attributes;
-        $template = sprintf('security/admin_login.html.twig');
+        $template = sprintf('FOSUserBundle:Security:login.html.twig');
         
         return $this->container->get('templating')->renderResponse($template, $data);
     }
@@ -39,19 +39,5 @@ class SecurityController extends BaseController {
     public function newAction(Request $request)
     {   
         return $this->render('security/login.html.twig');
-    }
-
-    /**
-     * @Route("/session_logout", name="session_logout")
-     */
-    public function sessionLogoutAction(Request $request)
-    {   
-        $session = $request->getSession();
-        
-        if($session->get('matricula') !== null){
-            $session->set('matricula', null);
-            return $this->redirectToRoute('login');
-        }
-        return $this->redirectToRoute('homepage');
     }
 }

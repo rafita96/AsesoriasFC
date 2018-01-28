@@ -8,27 +8,21 @@
 {% block navbar %}{% endblock %}
 
 {% block body %}
-<div class="row">
+<div class="row align-middle">
     <div class="col-12">
-
-        <input type="hidden" id="password" name="_password" />
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
         <form class="form-signin" action="{{ path('login') }}" method="post">
-            <h2 class="form-signin-heading">{{"Asesorías FC"}}</h2>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="hidden" id="password" name="_password" />
+            <input type="hidden" name="_target_path" value="/" />
+            
+            <h1 class="h3 mb-3 font-weight-normal">Asesorías FC</h1>
+
             <label for="username" class="sr-only">{{"Matrícula"}}</label>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="username" name="_username" placeholder="Matrícula" aria-label="Recipient" />
-            {#
-                If you want to control the URL the user
-                is redirected to on success (more details below)
-                
-            #}
-            <input type="hidden" name="_target_path" value="/" />
+                <input class="form-control" type="text" id="username" name="_username" required="required" placeholder="{{'Matrícula'}}" />
                 <div class="input-group-append">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                    <input type="submit" id="_submit" class="btn btn-lg btn-success btn-block" name="_submit" value="Entrar" />
                 </div>
             </div>
         </form>

@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdministradorController extends Controller
 {
-
     /**
      * @Route("/admin", name="admin_home")
      */

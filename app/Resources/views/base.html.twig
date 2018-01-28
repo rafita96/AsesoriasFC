@@ -13,7 +13,19 @@
     <body>
         {% block navbar %}
         <nav class="navbar navbar-dark" style="background-color: #027f45;">
-            <a class="navbar-brand" href="#">Asesorías FC</a>
+            <a class="navbar-brand" href="{{ path('homepage') }}">Asesorías FC</a>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="navbar-brand" href="#">Asesores</a>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') and app.user.asesor %}
+                <a class="navbar-brand" href="#">Solicitudes</a>
+            {% endif %}
+
+            <a class="navbar-brand" href="#">Citas</a>
+            <a class="navbar-brand" href="#">Perfil</a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,8 +37,9 @@
                         <li class="nav-item"><a class="nav-link" href="#">Citas</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
                     {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{"Cerrar Sesión"}}</a>
+                    </li>
                 </ul>
             </div>
         </nav>
