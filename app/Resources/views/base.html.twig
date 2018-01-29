@@ -15,34 +15,28 @@
         <nav class="navbar navbar-dark" style="background-color: #027f45;">
             <a class="navbar-brand" href="{{ path('homepage') }}">Asesorías FC</a>
 
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a class="navbar-brand" href="#">Administradores</a>
-            {% endif %}
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="navbar-brand" href="#">Asesores</a>
-            {% endif %}
-
-            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
-                <a class="navbar-brand" href="#">Solicitudes</a>
-            {% endif %}
-
-            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
-                <a class="navbar-brand" href="#">Citas</a>
-            {% endif %}
-            <a class="navbar-brand" href="#">Perfil</a>
-
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="nav-item"><a class="nav-link" href="">Administradores</a></li>
+                    {% endif %}
+
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_asesores') }}">Asesores</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Solicitudes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Citas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
                     {% endif %}
+
+                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('solicitudes') }}">Solicitudes</a></li>
+                    {% endif %}
+
+                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('citas') }}">Citas</a></li>
+                    {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{"Cerrar Sesión"}}</a>
                     </li>
