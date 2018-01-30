@@ -56,6 +56,25 @@ class Cita
      */
     private $estado;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="citas")
+     * @ORM\JoinColumn(name="alumno", referencedColumnName="id")
+     */
+    private $alumno;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="citas")
+     * @ORM\JoinColumn(name="asesor", referencedColumnName="id")
+     */
+    private $asesor;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="horario", type="json_array")
+     */
+    private $horario;
+
 
     /**
      * Get id
@@ -185,5 +204,77 @@ class Cita
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set alumno
+     *
+     * @param \AppBundle\Entity\Alumno $alumno
+     *
+     * @return Cita
+     */
+    public function setAlumno(\AppBundle\Entity\Alumno $alumno = null)
+    {
+        $this->alumno = $alumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumno
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAlumno()
+    {
+        return $this->alumno;
+    }
+
+    /**
+     * Set asesor
+     *
+     * @param \AppBundle\Entity\Alumno $asesor
+     *
+     * @return Cita
+     */
+    public function setAsesor(\AppBundle\Entity\Alumno $asesor = null)
+    {
+        $this->asesor = $asesor;
+
+        return $this;
+    }
+
+    /**
+     * Get asesor
+     *
+     * @return \AppBundle\Entity\Alumno
+     */
+    public function getAsesor()
+    {
+        return $this->asesor;
+    }
+
+    /**
+     * Set horario
+     *
+     * @param array $horario
+     *
+     * @return Cita
+     */
+    public function setHorario($horario)
+    {
+        $this->horario = $horario;
+
+        return $this;
+    }
+
+    /**
+     * Get horario
+     *
+     * @return array
+     */
+    public function getHorario()
+    {
+        return $this->horario;
     }
 }
