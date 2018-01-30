@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:SuperAdminController:index{% endblock %}
+
+{% block body %}
+<h1>Welcome to the SuperAdminController:index page</h1>
+    {% for admin in admins %}
+        <li>{{ admin }}</li>
+    {% endfor %}
+{% endblock %}
