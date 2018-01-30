@@ -15,9 +15,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $alumno = $this->getUser();
-        if(!in_array("ROLE_ADMIN", $alumno->getRoles())){
-            if($alumno->getNombre() == '' || $alumno->getAPaterno() == '' || $alumno->getAMaterno() == ''){
-                return $this->redirectToRoute('registro');
+        $roles = $alumno->getRoles();
+        if (!in_array("ROLE_ADMIN", $roles)) {
+            if (!in_array("ROLE_SUPER_ADMIN", $roles)) {
+                if($alumno->getNombre() == '' || $alumno->getAPaterno() == '' || $alumno->getAMaterno() == ''){
+                    return $this->redirectToRoute('registro');
+                }
             }
         }
 
