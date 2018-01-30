@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 class CitaType extends AbstractType
 {
     /**
@@ -14,15 +16,8 @@ class CitaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('tema')->add('materia')->add('expiracion')->add('cantidad');
-
-        // $builder->add('horarios', CollectionType::class, array(
-        //     'entry_type' => HorarioType::class,
-        //     'entry_options' => array('label' => false),
-        //     'allow_add' => true,
-        //     'by_reference' => false,
-        //     'allow_delete' => true,
-        // ));
+        $builder->add('tema')->add('materia')->add('expiracion')->add('cantidad')
+                ->add('horario', HiddenType::class);
     }/**
      * {@inheritdoc}
      */

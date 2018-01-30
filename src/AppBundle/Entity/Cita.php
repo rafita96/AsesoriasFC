@@ -68,6 +68,13 @@ class Cita
      */
     private $asesor;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="horario", type="json_array")
+     */
+    private $horario;
+
 
     /**
      * Get id
@@ -245,5 +252,29 @@ class Cita
     public function getAsesor()
     {
         return $this->asesor;
+    }
+
+    /**
+     * Set horario
+     *
+     * @param array $horario
+     *
+     * @return Cita
+     */
+    public function setHorario($horario)
+    {
+        $this->horario = $horario;
+
+        return $this;
+    }
+
+    /**
+     * Get horario
+     *
+     * @return array
+     */
+    public function getHorario()
+    {
+        return $this->horario;
     }
 }

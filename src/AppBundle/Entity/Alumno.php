@@ -51,11 +51,6 @@ class Alumno implements UserInterface, \Serializable
     private $aMaterno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Horario", mappedBy="alumno", cascade={"persist"})
-     */
-    private $horarios;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
@@ -64,7 +59,7 @@ class Alumno implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=true)
      */
     private $user;
 
@@ -269,40 +264,6 @@ class Alumno implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
-    }
-
-    /**
-     * Add horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     *
-     * @return Alumno
-     */
-    public function addHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios[] = $horario;
-
-        return $this;
-    }
-
-    /**
-     * Remove horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     */
-    public function removeHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios->removeElement($horario);
-    }
-
-    /**
-     * Get horarios
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getHorarios()
-    {
-        return $this->horarios;
     }
 
     /**
