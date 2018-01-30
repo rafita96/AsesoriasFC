@@ -1,8 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+{% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+    <a href="{{path('citas_new')}}">Nueva</a>
+{% endif %}
 <h1>Citas</h1>
-    {% for cita in citas %}
-        {{ cita.tema }}
-    {% endfor %}
+{% for cita in citas %}
+    {{ cita.tema }} <br>
+{% endfor %}
 {% endblock %}

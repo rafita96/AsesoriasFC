@@ -18,6 +18,10 @@
     <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
 {% endblock %}
 
+{% block integer_widget %}
+    {% set type = type|default('number') %}
+    <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" min="1" max="10" />
+{% endblock integer_widget %}
 
 {% block form_errors %}
     {% spaceless %}

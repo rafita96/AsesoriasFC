@@ -51,11 +51,6 @@ class Alumno implements UserInterface, \Serializable
     private $aMaterno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Horario", mappedBy="alumno", cascade={"persist"})
-     */
-    private $horarios;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
@@ -64,9 +59,14 @@ class Alumno implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=true)
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Cita", mappedBy="alumno, asesor", cascade={"persist"})
+     */
+    private $citas;
 
     /**
      * Get id
@@ -267,40 +267,6 @@ class Alumno implements UserInterface, \Serializable
     }
 
     /**
-     * Add horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     *
-     * @return Alumno
-     */
-    public function addHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios[] = $horario;
-
-        return $this;
-    }
-
-    /**
-     * Remove horario
-     *
-     * @param \AppBundle\Entity\Horario $horario
-     */
-    public function removeHorario(\AppBundle\Entity\Horario $horario)
-    {
-        $this->horarios->removeElement($horario);
-    }
-
-    /**
-     * Get horarios
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getHorarios()
-    {
-        return $this->horarios;
-    }
-
-    /**
      * Set asesor
      *
      * @param boolean $asesor
@@ -325,6 +291,19 @@ class Alumno implements UserInterface, \Serializable
     }
 
     /**
+     * Add cita
+     *
+     * @param \AppBundle\Entity\Cita $cita
+     *
+     * @return Alumno
+     */
+    public function addCita(\AppBundle\Entity\Cita $cita)
+    {
+        $this->citas[] = $cita;
+        return $this;
+    }
+
+    /**
      * Set user.
      *
      * @param \AppBundle\Entity\User|null $user
@@ -334,8 +313,27 @@ class Alumno implements UserInterface, \Serializable
     public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
-
         return $this;
+    }
+
+    /**
+     * Remove cita
+     *
+     * @param \AppBundle\Entity\Cita $cita
+     */
+    public function removeCita(\AppBundle\Entity\Cita $cita)
+    {
+        $this->citas->removeElement($cita);
+    }
+
+    /**
+     * Get citas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCitas()
+    {
+        return $this->citas;
     }
 
     /**
