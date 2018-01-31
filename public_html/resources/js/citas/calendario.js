@@ -1,6 +1,8 @@
 var horario, input;
 $(document).ready(function() {
     input = document.getElementById('appbundle_cita_horario');
+    input.value = "";
+
     horario = new Array();
 
     var tabla = document.getElementById('horario');
@@ -98,10 +100,18 @@ function agregarEncabezado(tr, dia, fecha){
 
 
 function fechaACorta(fecha){
-    console.log(fecha);
     var dia = fecha.getDate();
     var mes = fecha.getMonth()+1;
     var year = fecha.getFullYear();
 
     return dia+"/"+mes+"/"+year;
 }
+
+$("form[name='appbundle_cita']").submit(function(e){
+    if(horario.length <= 0){
+        toastr("No has elegido un horario.");
+        return false;
+    }
+
+    return true;
+});
