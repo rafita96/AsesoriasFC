@@ -3,6 +3,36 @@
 {% block body %}
 <h1>Solicitudes</h1>
 {% for cita in citas %}
-    {{ cita.tema }} <br>
+	<ul>
+    	<li>{{ cita.tema }}</li>
+    	<li>{{ cita.materia }}</li>
+    	<li>{{ cita.cantidad }}</li>
+    	<li>
+    		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal">
+    			Detalles
+    		</button>
+    	</li>
+    </ul>
 {% endfor %}
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				</h5>
+				<button></button>
+
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        		<button type="button" class="btn btn-primary">Save changes</button>
+      		</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

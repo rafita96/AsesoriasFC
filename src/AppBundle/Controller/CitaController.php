@@ -76,7 +76,7 @@ class CitaController extends Controller
     public function solicitudesAction(Request $request){
         $roles = $this->getUser()->getRoles();
         if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles) ||
-            $this->getUser()->getAsesor()){
+            $this->getUser()->getAsesor()) {
 
             $repository = $this->getDoctrine()->getRepository(Cita::class);
             $citas = $repository->findByAsesor(null);
