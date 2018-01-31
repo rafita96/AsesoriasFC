@@ -21,9 +21,10 @@ class CitaType extends AbstractType
                 ->add('expiracion', ChoiceType::class, array(
                     "label" => "Expiración",
                     "choices" => array(
-                        "Esta Semana" => "hoy",
-                        "Siguiente Semana" => "semana",
-                        "Este Mes" => "mes"
+                        "Esta Semana" => "0",
+                        "Siguiente Semana" => "1",
+                        "Esta Semana y la Siguiente" => "2", 
+                        "Este Mes" => "3"
                         ),
                     "attr" => array(
                         "class" => "form-control"
