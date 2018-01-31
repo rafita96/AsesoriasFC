@@ -6,13 +6,28 @@ $(document).ready(function() {
     var tabla = document.getElementById('horario');
     var tr = document.createElement("tr");
 
-    agregarEncabezado(tr, "Hora");
-    agregarEncabezado(tr, "Lunes");
-    agregarEncabezado(tr, "Martes");
-    agregarEncabezado(tr, "Miércoles");
-    agregarEncabezado(tr, "Jueves");
-    agregarEncabezado(tr, "Viernes");
+    var dia = new Date();
+    var fechas = new Array(0,0,0,0,0);
+
+    for(var i = 0; i < 7; i++){
+        var res = (i+dia.getDay())%7;
+        // Sabemos que no es sabado ni domingo
+        if(res != 0 && res != 6){
+            var d = new Date();
+            d.setDate(dia.getDate() + i);
+
+            fechas[res-1] = d;
+        }
+    }
+
+    agregarEncabezado(tr, "Hora", "");
+    agregarEncabezado(tr, "Lunes", fechaACorta(fechas[0]));
+    agregarEncabezado(tr, "Martes", fechaACorta(fechas[1]));
+    agregarEncabezado(tr, "Miércoles", fechaACorta(fechas[2]));
+    agregarEncabezado(tr, "Jueves", fechaACorta(fechas[3]));
+    agregarEncabezado(tr, "Viernes", fechaACorta(fechas[4]));
     tabla.appendChild(tr);
+    // console.log(fechas);
 
     for(var i = 0; i < 5; i++){
         var tr = document.createElement("tr");
@@ -23,10 +38,13 @@ $(document).ready(function() {
 
             if(j == 0){
                 var hora = (2*i + 8)%12;
+                var siguiente = hora + 2;
                 if(hora == 0){
                     hora = 12;
+                }else if(hora == 10){
+                    siguiente = 12;
                 }
-                td.innerHTML = hora + ":00 - " + ((hora + 2)%12) + ":00"
+                td.innerHTML = hora + ":00 - " + siguiente + ":00"
             }else{
                 td.index = i*5 + j - 1;
                 td.selected = false;
@@ -58,9 +76,32 @@ $(document).ready(function() {
     }
 });
 
-function agregarEncabezado(tr, dia){
+function agregarEncabezado(tr, dia, fecha){
     var th = document.createElement("th");
-    th.innerHTML = dia;
+    var row = document.createElement("div");
+    row.setAttribute("class", "row text-center");
+
+    var col1 = document.createElement("div");
+    col1.setAttribute("class", "col-12");
+    col1.innerHTML = dia;
+
+    var col2 = document.createElement("div");
+    col2.setAttribute("class", "col-12");
+    col2.innerHTML = fecha;
+
+    row.appendChild(col1);
+    row.appendChild(col2);
+
+    th.appendChild(row);
     tr.appendChild(th);
 }
 
+
+function fechaACorta(fecha){
+    console.log(fecha);
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth()+1;
+    var year = fecha.getFullYear();
+
+    return dia+"/"+mes+"/"+year;
+}

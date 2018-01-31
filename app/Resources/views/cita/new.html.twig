@@ -11,13 +11,12 @@
             {{ form_start(form) }}
             {{ form_row(form.tema) }}
             {{ form_row(form.materia) }}
-            {{ form_row(form.expiracion) }}
             {{ form_row(form.cantidad) }}
             {{ form_row(form.horario) }}
 
             <h3 class="text-center">Horario disponible</h3>
             <h5 class="text-center">{{"(Haga click sobre algún cuadro para seleccionar)"}}</h5>
-            <table class="table table-bordered" id="horario"></table>
+            <table class="table table-bordered table-dark text-center" id="horario"></table>
         </div>
 
         <div class="card-footer text-center">
