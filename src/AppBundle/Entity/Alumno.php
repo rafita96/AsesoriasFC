@@ -58,10 +58,10 @@ class Alumno implements UserInterface, \Serializable
     private $asesor = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="asesores")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="alumnos")
+     * @ORM\JoinTable(name="alumnos_users")
      */
-    private $user;
+    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="Cita", mappedBy="alumno, asesor", cascade={"persist"})
@@ -266,10 +266,12 @@ class Alumno implements UserInterface, \Serializable
         return $this->isActive;
     }
 
+    
+
     /**
-     * Set asesor
+     * Set asesor.
      *
-     * @param boolean $asesor
+     * @param bool $asesor
      *
      * @return Alumno
      */
@@ -281,9 +283,9 @@ class Alumno implements UserInterface, \Serializable
     }
 
     /**
-     * Get asesor
+     * Get asesor.
      *
-     * @return boolean
+     * @return bool
      */
     public function getAsesor()
     {
@@ -291,7 +293,7 @@ class Alumno implements UserInterface, \Serializable
     }
 
     /**
-     * Add cita
+     * Add cita.
      *
      * @param \AppBundle\Entity\Cita $cita
      *
@@ -300,34 +302,24 @@ class Alumno implements UserInterface, \Serializable
     public function addCita(\AppBundle\Entity\Cita $cita)
     {
         $this->citas[] = $cita;
+
         return $this;
     }
 
     /**
-     * Set user.
-     *
-     * @param \AppBundle\Entity\User|null $user
-     *
-     * @return Alumno
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
-     * Remove cita
+     * Remove cita.
      *
      * @param \AppBundle\Entity\Cita $cita
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
     public function removeCita(\AppBundle\Entity\Cita $cita)
     {
-        $this->citas->removeElement($cita);
+        return $this->citas->removeElement($cita);
     }
 
     /**
-     * Get citas
+     * Get citas.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -336,13 +328,40 @@ class Alumno implements UserInterface, \Serializable
         return $this->citas;
     }
 
+
     /**
-     * Get user.
+     * Add user.
      *
-     * @return \AppBundle\Entity\User|null
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Alumno
      */
-    public function getUser()
+    public function addUser(\AppBundle\Entity\User $user)
     {
-        return $this->user;
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user.
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        return $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

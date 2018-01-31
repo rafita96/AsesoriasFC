@@ -1,12 +1,90 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container">
+	<div class="col-md-10 offset-md-1">
 		<div class="row">
-			HOME
-			<div class="col-6">Hola </div>
-	        <div class="col-4">Hi there</div>
-	        <div class="col-2">Hello</div>
+			{# <div class="col-md-1"><button class="btn btn-info btn-sm float-left" type="button">{{ periodo }}</button></div> #}
+		    <div class="col-md-10"><h1 class="text-center"> ASESORES </h1></div>
+		    <div class="col-md-1"><button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#aAsesor">Agregar</button></div>
 		</div>
+		<div class="row">
+			<table class="table table-bordered table-striped">
+				<thead>
+			    	<tr>
+			      		<th>Matrícula</th>
+						<th>Nombre</th>
+						<th>Apellido Paterno</th>
+						<th>Apellido Materno</th>
+						<th>Detalles</th>
+						<th>Acción</th>
+			    	</tr>
+			  	</thead>
+				<tbody>
+					{% for asesor in asesores %}
+						<tr>
+							<td>{{ asesor.matricula }}</td>
+							<td>{{ asesor.nombre }}</td>
+							<td>{{ asesor.apaterno }}</td>
+							<td>{{ asesor.amaterno }}</td>
+							<td>Detalles</td>
+							<td>
+								<button class="btn btn-warning text-white btn-sm">Editar</button>
+								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}">Eliminar</button>
+							</td>
+						</tr>
+						{# INICIO MODAL ELIMINAR #}
+						<div class="modal fade" id="eAsesor{{asesor.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">¿Desea eleminar a este asesor?</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="alert alert-danger"> 
+											{{ asesor.nombre }} {{ asesor.apaterno }} {{ asesor.amaterno }} con la matrícula: {{asesor.matricula}} <br/>
+											Una vez realizada esta acción no se podrá deshacer.
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+										<a href="{{ path('admin_remove', {'id': asesor.id }) }}" class="btn btn-danger btn-sm">Eliminar</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{# FIN MODAL #}
+					{% endfor %}
+			  	</tbody>
+			</table>
+		</div>
+		{# INICIO MODAL AGREGAR #}
+		<div class="modal fade " id="aAsesor" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Agregar un nuevo asesor</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group row">
+							<label for="example-text-input" class="col-4 col-form-label">Matrícula:</label>
+							<div class="col-8">
+								<input class="form-control" type="text" id="matricula">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+						<a href="{{ path('admin_add') }}" class="btn btn-success btn-sm">Agregar</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		{# FIN MODAL #}
 	</div>
 {% endblock %}
