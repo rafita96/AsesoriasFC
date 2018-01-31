@@ -36,13 +36,6 @@ class Cita
     private $materia;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="expiracion", type="string", length=20)
-     */
-    private $expiracion;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="cantidad", type="integer")
@@ -132,30 +125,6 @@ class Cita
     public function getMateria()
     {
         return $this->materia;
-    }
-
-    /**
-     * Set expiracion
-     *
-     * @param string $expiracion
-     *
-     * @return Cita
-     */
-    public function setExpiracion($expiracion)
-    {
-        $this->expiracion = $expiracion;
-
-        return $this;
-    }
-
-    /**
-     * Get expiracion
-     *
-     * @return string
-     */
-    public function getExpiracion()
-    {
-        return $this->expiracion;
     }
 
     /**

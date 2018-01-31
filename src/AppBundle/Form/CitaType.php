@@ -18,19 +18,6 @@ class CitaType extends AbstractType
     {
         $builder->add('tema')
                 ->add('materia')
-                ->add('expiracion', ChoiceType::class, array(
-                    "label" => "Expiración",
-                    "choices" => array(
-                        "Esta Semana" => "0",
-                        "Siguiente Semana" => "1",
-                        "Esta Semana y la Siguiente" => "2", 
-                        "Este Mes" => "3"
-                        ),
-                    "attr" => array(
-                        "class" => "form-control"
-                        )
-                    )
-                )
                 ->add('cantidad', null, array(
                         'label' => 'Cantidad de alumnos',
                         'attr' => array(
