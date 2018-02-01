@@ -61,6 +61,16 @@ class CitaController extends Controller
      * @Route("/citas/", name="citas")
      */
     public function verAction(Request $request){
+        if ($this->getUser()->getAsesor()) {
+            $asesor = $this->getUser();
+            
+            $repository = $this->getDoctrine()->getRepository(Cita::class);
+            $citas = $repository->findByAsesor($asesor);
+
+            return $this->render('cita/lista.html.twig', array(
+                'citas' => $citas,
+            ));
+        }
         $alumno = $this->getUser();
 
         $repository = $this->getDoctrine()->getRepository(Cita::class);
