@@ -1,11 +1,55 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-{% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-    <a href="{{path('citas_new')}}">Nueva</a>
-{% endif %}
-<h1>Citas</h1>
-{% for cita in citas %}
-    {{ cita.tema }} <br>
-{% endfor %}
+<div class="row text-center">
+    <div class="card col-12">
+        
+        <div class="card-header">
+            <h1>Solicitudes{% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}</h1>
+            {% endif %}
+        </div>
+            <a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th class="col-5">Materia</th>
+                    <th class="col-5">Tema</th>
+                    <th class="col-1">Detalles</th>
+                    <th class="col-1">{{"Acción"}}</th>
+                </thead>
+
+                <tbody>    
+                    {% for cita in citas %}
+                    <tr>
+                        <td>{{ cita.materia }}</td>
+                        <td>{{ cita.tema }}</td>
+                        <td><button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button></td>
+                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal">Eliminar</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+{# Ver detalles #}
+<div class="modal fade" id="verModal" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles cita</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <div class="modal-body" id="contenidoModal">
+            Contenido
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
