@@ -3,10 +3,12 @@
 {% block body %}
 <div class="row text-center">
     <div class="card col-12">
-        
         <div class="card-header">
-            <h1>Solicitudes{% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}</h1>
-            {% endif %}
+            <h1>Citas
+                {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+
+                {% endif %}
+            </h1>
         </div>
             <a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a>
         <div class="card-body">
@@ -15,7 +17,9 @@
                     <th class="col-5">Materia</th>
                     <th class="col-5">Tema</th>
                     <th class="col-1">Detalles</th>
-                    <th class="col-1">{{"Acción"}}</th>
+                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                        <th class="col-1">{{"Acción"}}</th>
+                    {% endif %}
                 </thead>
 
                 <tbody>    
@@ -23,8 +27,14 @@
                     <tr>
                         <td>{{ cita.materia }}</td>
                         <td>{{ cita.tema }}</td>
-                        <td><button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button></td>
-                        <td><button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button></td>
+                        <td>
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button>
+                        </td>
+                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                            <td>
+                                <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
