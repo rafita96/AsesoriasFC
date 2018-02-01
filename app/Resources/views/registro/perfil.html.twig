@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="card col-12">
+        <div class="card-header"><h1 class="text-center">Perfil</h1></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4"><h4 class="text-right"><b>{{"Matrícula:"}}</b></h4></div>
+                <div class="col-8"><h4 class="text-left">{{ alumno.matricula }}</h4></div>
+            </div>
+
+            <div class="row">
+                <div class="col-4"><h4 class="text-right"><b>Nombre:</b></h4></div>
+                <div class="col-8"><h4 class="text-left">{{ alumno.nombre }}</h4></div>
+            </div>
+
+            <div class="row">
+                <div class="col-4"><h4 class="text-right"><b>Apellido Paterno:</b></h4></div>
+                <div class="col-8"><h4 class="text-left">{{ alumno.aPaterno }}</h4></div>
+            </div>
+
+            <div class="row">
+                <div class="col-4"><h4 class="text-right"><b>Apellido Materno:</b></h4></div>
+                <div class="col-8"><h4 class="text-left">{{ alumno.aMaterno }}</h4></div>
+            </div>
+
+            <div class="row">
+                <div class="col-4"><h4 class="text-right"><b>Correo Institucional:</b></h4></div>
+                <div class="col-8"><h4 class="text-left">{{ alumno.correo ~ "@uabc.edu.mx" }}</h4></div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            {% if app.user.matricula and app.user.matricula == alumno.matricula %}
+                <a class="btn btn-secondary" href="{{ path('registro') }}">Editar Perfil</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

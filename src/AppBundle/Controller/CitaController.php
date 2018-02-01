@@ -25,12 +25,16 @@ class CitaController extends Controller
             return $this->redirectToRoute('citas');
         }
 
+        $alumno = $this->getUser();
+        if(!$alumno->isComplete()){
+            return $this->redirectToRoute('registro');
+        }
+
         $cita = new Cita();
         $form = $this->createForm(CitaType::class, $cita);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $alumno = $this->getUser();
             $cita->setAlumno($alumno);
             $cita->setEstado(0);
 
@@ -67,6 +71,11 @@ class CitaController extends Controller
         $alumno = $this->getUser();
 
         $repository = $this->getDoctrine()->getRepository(Cita::class);
+        $cita = $repository->findById($id);
+        if(!$cita){
+            throw new NotFoundHttpException("La solicitud no existe");
+        }
+
         $cita = $repository->findByAlumnoCita($alumno, $id);
         if($cita){
             $em = $this->getDoctrine()->getManager();
@@ -76,7 +85,7 @@ class CitaController extends Controller
             return $this->redirectToRoute('citas');
         }
         
-        throw new NotFoundHttpException("La cita no existe o no eres el dueño.");
+        throw new NotFoundHttpException("No eres el dueño de esta solicitud.");
     }
 
     /**

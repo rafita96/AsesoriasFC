@@ -37,7 +37,7 @@
                     {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('citas') }}">Citas</a></li>
                     {% endif %}
-                        <li class="nav-item"><a class="nav-link" href="#">Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('perfil_alumno') }}">Perfil</a></li>
                     
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{"Cerrar Sesión"}}</a>

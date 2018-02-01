@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="cita")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CitaRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Cita
 {
@@ -67,6 +68,20 @@ class Cita
      * @ORM\Column(name="horario", type="json_array")
      */
     private $horario;
+
+    /**
+     * @ORM\Column(name="dia_creado", type="datetime")
+     */
+    private $diaCreado;    
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function saveOnPrePersist()
+    {
+        date_default_timezone_set('America/Tijuana');
+        $this->diaCreado = new \DateTime();
+    }
 
 
     /**
@@ -245,5 +260,29 @@ class Cita
     public function getHorario()
     {
         return $this->horario;
+    }
+
+    /**
+     * Set diaCreado
+     *
+     * @param \DateTime $diaCreado
+     *
+     * @return Cita
+     */
+    public function setDiaCreado($diaCreado)
+    {
+        $this->diaCreado = $diaCreado;
+
+        return $this;
+    }
+
+    /**
+     * Get diaCreado
+     *
+     * @return \DateTime
+     */
+    public function getDiaCreado()
+    {
+        return $this->diaCreado;
     }
 }

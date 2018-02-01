@@ -14,12 +14,14 @@ class AlumnoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')
-                ->add('aPaterno')
-                ->add('aMaterno')
+        $builder->add('nombre', null, array('required' => true))
+                ->add('aPaterno', null, array('label' => "Apellido Paterno",'required' => true))
+                ->add('aMaterno', null, array('label' => "Apellido Materno",'required' => true))
+                ->add('correo', null, array('label' => "Correo Institucional",'required' => true))
                 ->add('save', SubmitType::class, array('label' => 'Continuar'))
         ;
-    }/**
+    }
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

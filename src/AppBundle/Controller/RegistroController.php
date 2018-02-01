@@ -12,7 +12,7 @@ use AppBundle\Form\AlumnoType;
 class RegistroController extends Controller
 {
     /**
-     * @Route("/registro", name="registro")
+     * @Route("/perfil/editar", name="registro")
      */
     public function defaultAction(Request $request)
     {
@@ -27,7 +27,7 @@ class RegistroController extends Controller
             $em->persist($alumno);
             $em->flush();
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('perfil_alumno');
         }
 
         return $this->render('registro/registro.html.twig', array(
@@ -35,4 +35,14 @@ class RegistroController extends Controller
         ));
     }
 
+    /**
+     * @Route("/perfil/", name="perfil_alumno")
+     */
+    public function perfilAction(Request $request){
+        $alumno = $this->getUser();
+
+        return $this->render('registro/perfil.html.twig',array(
+            'alumno' => $alumno
+        ));
+    }
 }

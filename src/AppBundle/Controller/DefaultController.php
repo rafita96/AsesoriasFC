@@ -18,7 +18,7 @@ class DefaultController extends Controller
         $roles = $alumno->getRoles();
         if (!in_array("ROLE_ADMIN", $roles)) {
             if (!in_array("ROLE_SUPER_ADMIN", $roles)) {
-                if($alumno->getNombre() == '' || $alumno->getAPaterno() == '' || $alumno->getAMaterno() == ''){
+                if(!$alumno->isComplete()){
                     return $this->redirectToRoute('registro');
                 }
             }
