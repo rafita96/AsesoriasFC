@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{# import "_self" as the form theme #}
+
+{# make the form fragment customization #}
+{% block form_row %}
+    {% spaceless %}
+    <div class="form-group">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+    {% endspaceless %}
+{% endblock form_row %}
