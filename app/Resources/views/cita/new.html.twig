@@ -4,24 +4,28 @@
 <div class="row">
     <div class="card col-12">
         <div class="card-header">
-            <h2 class="text-center">Nueva Cita</h2>
+            <a class="btn btn-secondary" href="{{ path('citas') }}"><i class="fas fa-arrow-left"></i></a>
+            <h2 class="text-center">Nueva Solicitud</h2>
         </div>
 
         <div class="card-body">
             {{ form_start(form) }}
-            {{ form_row(form.tema) }}
             {{ form_row(form.materia) }}
+            {{ form_row(form.tema) }}
             {{ form_row(form.cantidad) }}
             {{ form_row(form.horario) }}
 
             <h3 class="text-center">Horario disponible</h3>
             <h5 class="text-center">{{"(Haga click sobre algún cuadro para seleccionar)"}}</h5>
-            <table class="table table-bordered table-dark text-center" id="horario"></table>
+            
+            <table class="table table-bordered table-dark text-center table-responsive{-sm|-md|-lg|-xl} col-12" id="horario"></table>
         </div>
 
+        <button class="btn btn-success" type="submit">Guardar</button>
+        {{ form_end(form) }}
+
         <div class="card-footer text-center">
-            <button class="btn btn-success col-6" type="submit">Guardar</button>
-            {{ form_end(form) }}
+            <br>
         </div>
     </div>
 
