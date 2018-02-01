@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class CitaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByAlumnoCita($alumno, $id)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c, AppBundle:Alumno a WHERE a.id = :alumno and c.id = :cita'
+            )
+            ->setParameter("cita", $id)
+            ->setParameter("alumno", $alumno)
+            ->getOneOrNullResult();
+    }
 }

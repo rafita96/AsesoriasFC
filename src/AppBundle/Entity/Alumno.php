@@ -51,6 +51,13 @@ class Alumno implements UserInterface, \Serializable
     private $aMaterno;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="correo", type="string", length=100, nullable=true)
+     */
+    private $correo;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="asesor", type="boolean", options={"default" : 0})
@@ -174,6 +181,14 @@ class Alumno implements UserInterface, \Serializable
         return $this->aMaterno;
     }
     
+    public function isComplete(){
+        if($this->nombre == '' || $this->aPaterno == '' || $this->aMaterno == '' || $this->correo == ''){
+            return false;
+        }
+
+        return true;
+    }
+
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -363,5 +378,29 @@ class Alumno implements UserInterface, \Serializable
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set correo
+     *
+     * @param string $correo
+     *
+     * @return Alumno
+     */
+    public function setCorreo($correo)
+    {
+        $this->correo = $correo;
+
+        return $this;
+    }
+
+    /**
+     * Get correo
+     *
+     * @return string
+     */
+    public function getCorreo()
+    {
+        return $this->correo;
     }
 }

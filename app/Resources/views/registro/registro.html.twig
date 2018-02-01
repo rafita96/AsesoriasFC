@@ -5,7 +5,14 @@
         <div class="col-12">
             <h3>Perfil</h3>
             {{ form_start(form) }}
-            {{ form_errors(form) }}
+            {{ form_label(form.correo) }}
+            <div class="input-group mb-3">
+            {{ form_widget(form.correo) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">@uabc.edu.mx</span>
+                </div>
+            </div>
+            {{ form_errors(form.correo) }}
             {{ form_end(form) }}
         </div>
     </div>
