@@ -6,6 +6,7 @@ use AppBundle\Entity\Cita;
 use AppBundle\Entity\Horario;
 use AppBundle\Form\CitaType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -77,7 +78,19 @@ class CitaController extends Controller
         $roles = $this->getUser()->getRoles();
         if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles) ||
             $this->getUser()->getAsesor()) {
+            
+            $id_cita = $request->request->get('cita_id');
+            if (!empty($id_cita)) {
+                $em = $this->getDoctrine()->getManager();
 
+                $cita = $this->getDoctrine()->getRepository(Cita::class)->find($id_cita);
+                $asesor = $this->getUser();
+                $cita->setAsesor($asesor);
+                $cita->setEstado(true);
+
+                $em->persist($cita);
+                $em->flush();
+            }
             $repository = $this->getDoctrine()->getRepository(Cita::class);
             $citas = $repository->findByAsesor(null);
 
