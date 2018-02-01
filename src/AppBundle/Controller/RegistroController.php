@@ -40,6 +40,11 @@ class RegistroController extends Controller
      */
     public function perfilAction(Request $request){
         $alumno = $this->getUser();
+        $roles = $alumno->getRoles();
+        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles)){
+
+            return $this->redirectToRoute('fos_user_profile_show');
+        }
 
         return $this->render('registro/perfil.html.twig',array(
             'alumno' => $alumno
