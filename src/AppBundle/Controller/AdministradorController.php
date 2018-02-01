@@ -49,18 +49,12 @@ class AdministradorController extends Controller
             $asesores = $user->getAlumnos();
             foreach ($asesores as &$asesor) {            
                 if($asesor == $alumno){
-                    $this->addFlash(
-                                'error',
-                                'Ese asesor ya fue agregado anteriormente.'
-                            );
+                    $this->addFlash('danger','Ese asesor ya fue agregado anteriormente.');
                     return $this->redirectToRoute('admin_home');
                 }
             }
         }
-        $this->addFlash(
-                    'notice',
-                    'El asesor fue agregado correctamente.'
-                );
+        $this->addFlash('success','El asesor fue agregado correctamente.');
         $user->addAlumno($alumno);
         $alumno->addUser($user);
 
@@ -89,6 +83,7 @@ class AdministradorController extends Controller
     	$em->persist($alumno);
     	$em->flush();
 
+        $this->addFlash('success','El asesor fue eliminado correctamente.');
     	return $this->redirectToRoute('admin_home');
     }
 
