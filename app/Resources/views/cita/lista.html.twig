@@ -24,7 +24,7 @@
                         <td>{{ cita.materia }}</td>
                         <td>{{ cita.tema }}</td>
                         <td><button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button></td>
-                        <td><button class="btn btn-danger" data-toggle="modal" data-target="#eliminarModal">Eliminar</button></td>
+                        <td><button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -32,24 +32,32 @@
         </div>
 </div>
 
-{# Ver detalles #}
-<div class="modal fade" id="verModal" tabindex="-1" role="dialog" aria-labelledby="Detalles" aria-hidden="true">
+{# Eliminar #}
+<div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Detalles cita</h5>
+                <h5 class="modal-title">Advertencia</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
         <div class="modal-body" id="contenidoModal">
-            Contenido
+            {{ "¿Estás seguro de que quieres eliminar esta cita?" }}
         </div>
+
         <div class="modal-footer">
+        <a id="eliminarbtn" class="btn btn-danger" href="">Eliminar</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
         </div>
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('resources/js/citas/lista.js') }}"></script>
 {% endblock %}

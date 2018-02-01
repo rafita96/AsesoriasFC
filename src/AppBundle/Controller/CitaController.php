@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CitaController extends Controller
 {
@@ -25,17 +26,6 @@ class CitaController extends Controller
         }
 
         $cita = new Cita();
-
-        // dummy
-        // $horario1 = new Horario();
-        // $horario1->setDia(1);
-        // $horario1->setHorario('8:00 - 10:00');
-        // $cita->addHorario($horario1);
-        // $horario2 = new Horario();
-        // $horario2->setDia(0);
-        // $horario2->setHorario('8:00 - 10:00');
-        // $cita->addHorario($horario2);
-
         $form = $this->createForm(CitaType::class, $cita);
         $form->handleRequest($request);
 
@@ -68,6 +58,25 @@ class CitaController extends Controller
         return $this->render('cita/lista.html.twig', array(
             'citas' => $citas,
         ));
+    }
+
+    /**
+     * @Route("/citas/eliminar/{id}", name="citas_eliminar")
+     */
+    public function eliminarAction(Request $request, $id){
+        $alumno = $this->getUser();
+
+        $repository = $this->getDoctrine()->getRepository(Cita::class);
+        $cita = $repository->findByAlumnoCita($alumno, $id);
+        if($cita){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($cita);
+            $em->flush();
+
+            return $this->redirectToRoute('citas');
+        }
+        
+        throw new NotFoundHttpException("La cita no existe o no eres el dueño.");
     }
 
     /**
