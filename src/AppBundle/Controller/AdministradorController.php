@@ -39,13 +39,28 @@ class AdministradorController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository(Alumno::class);
         $alumno = $repository->findOneByMatricula($matricula);
-        if(!$alumno){
+        // Si no existe el alumno, crea uno
+        if(is_null($alumno)){
             $alumno = new Alumno();
             $alumno->setMatricula($matricula);
             $alumno->setIsActive(true);
             $alumno->setAsesor(true);
+        }else{
+            $asesores = $user->getAlumnos();
+            foreach ($asesores as &$asesor) {            
+                if($asesor == $alumno){
+                    $this->addFlash(
+                                'error',
+                                'Ese asesor ya fue agregado anteriormente.'
+                            );
+                    return $this->redirectToRoute('admin_home');
+                }
+            }
         }
-        
+        $this->addFlash(
+                    'notice',
+                    'El asesor fue agregado correctamente.'
+                );
         $user->addAlumno($alumno);
         $alumno->addUser($user);
 

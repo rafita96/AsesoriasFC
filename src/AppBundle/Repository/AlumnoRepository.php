@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class AlumnoRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findByAlumnoUser($alumno, $user)
+	{
+		return $this->getEntityManager()
+			->createQuery(
+				'SELECT a FROM AppBundle:User u, AppBundle:Alumno a JOIN u.alumnos ass WHERE ass = a and a.id = :alumno and u.id = :user'
+			)
+			->setParameter("alumno", $alumno->getId())
+			->setParameter("user", $user->getId())
+			->getOneOrNullResult();
+	}
 }
