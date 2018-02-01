@@ -17,6 +17,11 @@ class RegistroController extends Controller
     public function defaultAction(Request $request)
     {
         $alumno = $this->getUser();
+        $roles = $alumno->getRoles();
+        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles)){
+
+            return $this->redirectToRoute('fos_user_profile_edit');
+        }
 
         $form = $this->createForm(AlumnoType::class, $alumno);
         $form->handleRequest($request);
