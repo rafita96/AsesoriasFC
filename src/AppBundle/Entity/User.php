@@ -40,44 +40,45 @@ class User extends BaseUser
     private $aMaterno;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alumno", mappedBy="user")
+     * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="users")
      */
-    private $asesores;
+    private $alumnos;
+
 
     /**
-     * Add asesore.
+     * Add alumno.
      *
-     * @param \AppBundle\Entity\Alumno $asesore
+     * @param \AppBundle\Entity\Alumno $alumno
      *
      * @return User
      */
-    public function addAsesore(\AppBundle\Entity\Alumno $asesore)
+    public function addAlumno(\AppBundle\Entity\Alumno $alumno)
     {
-        $this->asesores[] = $asesore;
+        $this->alumnos[] = $alumno;
 
         return $this;
     }
 
     /**
-     * Remove asesore.
+     * Remove alumno.
      *
-     * @param \AppBundle\Entity\Alumno $asesore
+     * @param \AppBundle\Entity\Alumno $alumno
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAsesore(\AppBundle\Entity\Alumno $asesore)
+    public function removeAlumno(\AppBundle\Entity\Alumno $alumno)
     {
-        return $this->asesores->removeElement($asesore);
+        return $this->alumnos->removeElement($alumno);
     }
 
     /**
-     * Get asesores.
+     * Get alumnos.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAsesores()
+    public function getAlumnos()
     {
-        return $this->asesores;
+        return $this->alumnos;
     }
 
     /**
