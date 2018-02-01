@@ -16,7 +16,7 @@
 						<th>Apellido Paterno</th>
 						<th>Apellido Materno</th>
 						<th>Detalles</th>
-						<th>Acción</th>
+						<th>Eliminar</th>
 			    	</tr>
 			  	</thead>
 				<tbody>
@@ -28,7 +28,6 @@
 							<td>{{ asesor.amaterno }}</td>
 							<td>Detalles</td>
 							<td>
-								<button class="btn btn-warning text-white btn-sm">Editar</button>
 								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}">Eliminar</button>
 							</td>
 						</tr>
@@ -61,30 +60,33 @@
 			</table>
 		</div>
 		{# INICIO MODAL AGREGAR #}
-		<div class="modal fade " id="aAsesor" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Agregar un nuevo asesor</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group row">
-							<label for="example-text-input" class="col-4 col-form-label">Matrícula:</label>
-							<div class="col-8">
-								<input class="form-control" type="text" id="matricula">
-							</div>
+		<form action="{{ path('admin_add') }}" method="post">
+			<div class="modal fade " id="aAsesor" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Agregar un nuevo asesor</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
-						<a href="{{ path('admin_add') }}" class="btn btn-success btn-sm">Agregar</a>
+						<div class="modal-body">
+								<div class="form-group row">
+									<label for="example-text-input" class="col-4 col-form-label">Matrícula:</label>
+									<div class="col-8">
+										<input class="form-control" type="text" id="matricula" name="matricula">
+									</div>
+								</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-success btn-sm">Agregar</button>
+							{# <a href="{{ path('admin_add') }}" class="btn btn-success btn-sm">Agregar</a> #}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 		{# FIN MODAL #}
 	</div>
 {% endblock %}

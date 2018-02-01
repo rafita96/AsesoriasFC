@@ -4,8 +4,9 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Entity\Alumno as Alumno;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Alumno;
 
 class AdministradorController extends Controller
 {
@@ -30,8 +31,29 @@ class AdministradorController extends Controller
     /**
 	 * @Route("/admin/add", name="admin_add")
      */
-    public function addAction(){
-    	return new Response("Hola mundo!");
+    public function addAction(Request $request){
+        $matricula = $request->request->get('matricula');
+        $user = $this->getUser();
+        $alumnos = $user->getAlumnos();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $repository = $em->getRepository(Alumno::class);
+        $alumno = $repository->findOneByMatricula($matricula);
+        if(!$alumno){
+            $alumno = new Alumno();
+            $alumno->setMatricula($matricula);
+            $alumno->setIsActive(true);
+            $alumno->setAsesor(true);
+        }
+        
+        $user->addAlumno($alumno);
+        $alumno->addUser($user);
+
+        $em->persist($user);
+        $em->persist($alumno);
+        $em->flush();
+
+    	return $this->redirectToRoute('admin_home');
     }
 
     /**
