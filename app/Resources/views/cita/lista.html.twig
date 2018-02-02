@@ -1,117 +1,102 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="row text-center">
-    <div class="card col-12">
-        <div class="card-header">
-            <h1>Citas
-                {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+    <div class="row text-center">
+        <div class="card col-12">
+            <div class="card-header">
+                <h1>Citas
+                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 
+                    {% endif %}
+                </h1>
+            </div>
+            <div class="card-body">
+                {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                    <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>
                 {% endif %}
-            </h1>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <th class="col-5">Materia</th>
+                        <th class="col-5">Tema</th>
+                        <th class="col-1">Detalles</th>
+                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                            <th class="col-1">{{"Acción"}}</th>
+                        {% endif %}
+                    </thead>
+                    <tbody>    
+                        {% for cita in citas %}
+                            <tr>
+                                <td>{{ cita.materia }}</td>
+                                <td>{{ cita.tema }}</td>
+                                <td><button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button></td>
+                                {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                                    <td>
+                                        <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div class="card-body">
-            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-                <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>
-            {% endif %}
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <th class="col-5">Materia</th>
-                    <th class="col-5">Tema</th>
-                    <th class="col-1">Detalles</th>
-                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-                        <th class="col-1">{{"Acción"}}</th>
-                    {% endif %}
-                </thead>
-                <tbody>    
-                    {% for cita in citas %}
-
-                    {% set indices = "" %}
-                    {% for i in 0..(cita.horario|length - 1) %}
-                        {% set indices = indices ~ "," ~ cita.horario[i] %}
-                    {% endfor %}
-
-                    <tr>
-                        <td>{{ cita.materia }}</td>
-                        <td>{{ cita.tema }}</td>
-                        <td>
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal" data-tema="{{ cita.tema }}" data-materia="{{ cita.materia }}" data-array="{{ indices }}" data-cantidad="{{ cita.cantidad }}" data-fecha="{{ cita.diaCreado|date('Y-m-d h:m:s') }}">Ver</button>
-                        </td>
-                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-                            <td>
-                                <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
-                            </td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        {# Eliminar #}
+        <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Advertencia</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="contenidoModal">
+                        {{ "¿Estás seguro de que quieres eliminar esta cita?" }}
+                    </div>
+                    <div class="modal-footer">
+                        <a id="eliminarbtn" class="btn btn-danger" href="">Eliminar</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    {# Eliminar #}
-    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    {# Informacion #}
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Advertencia</h5>
+                <div class="modal-header"> 
+                    <h5 class="modal-title" id="exampleModalLabel">Solicitud</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="tema">Tema</label>
+                        <input class="form-control" id="tema" type="text" placeholder="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="materia">Materia</label>
+                        <input class="form-control" id="materia" type="text" placeholder="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input id="cantidad" class="form-control" type="text" placeholder="" readonly>
+                    </div>
+                </div>
+                <h3 class="text-center">Horario Disponible</h3>
+                <table id="horario" class="table table-bordered table-dark text-center">
 
-            <div class="modal-body" id="contenidoModal">
-                {{ "¿Estás seguro de que quieres eliminar esta cita?" }}
-            </div>
-
-            <div class="modal-footer">
-            <a id="eliminarbtn" class="btn btn-danger" href="">Eliminar</a>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-{# Informacion #}
-<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Solicitud</h5>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="tema">Tema</label>
-                    <input class="form-control" id="tema" type="text" placeholder="" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="materia">Materia</label>
-                    <input class="form-control" id="materia" type="text" placeholder="" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="cantidad">Cantidad</label>
-                    <input id="cantidad" class="form-control" type="text" placeholder="" readonly>
-                </div>
-            </div>
-
-            <h3 class="text-center">Horario Disponible</h3>
-            <table id="horario" class="table table-bordered table-dark text-center">
-
-            </table>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 {% endblock %}
 
 {% block javascripts %}
