@@ -10,7 +10,7 @@
                 {% endif %}
             </h1>
         </div>
-            <a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a>
+            <a class="btn btn-primary float-right" href="{{ path('citas_new') }}">Nueva</a>
         <div class="card-body">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -24,11 +24,17 @@
 
                 <tbody>    
                     {% for cita in citas %}
+
+                    {% set indices = "" %}
+                    {% for i in 0..(cita.horario|length - 1) %}
+                        {% set indices = indices ~ "," ~ cita.horario[i] %}
+                    {% endfor %}
+
                     <tr>
                         <td>{{ cita.materia }}</td>
                         <td>{{ cita.tema }}</td>
                         <td>
-                            <button class="btn btn-secondary" data-toggle="modal" data-target="#verModal">Ver</button>
+                            <button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal" data-tema="{{ cita.tema }}" data-materia="{{ cita.materia }}" data-array="{{ indices }}" data-cantidad="{{ cita.cantidad }}" data-fecha="{{ cita.diaCreado|date('Y-m-d h:m:s') }}">Ver</button>
                         </td>
                         {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
                             <td>
@@ -65,9 +71,48 @@
     </div>
 </div>
 
+{# Informacion #}
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Solicitud</h5>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tema">Tema</label>
+                    <input class="form-control" id="tema" type="text" placeholder="" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="materia">Materia</label>
+                    <input class="form-control" id="materia" type="text" placeholder="" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input id="cantidad" class="form-control" type="text" placeholder="" readonly>
+                </div>
+            </div>
+
+            <h3>Horario Disponible</h3>
+            <table id="horario" class="table table-bordered table-dark text-center">
+
+            </table>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="{{ asset('resources/js/citas/lista.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('resources/js/citas/detalles.js') }}"></script>
 {% endblock %}
