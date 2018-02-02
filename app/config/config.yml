@@ -75,6 +75,9 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
     use_flash_notifications: true
+    registration:
+        confirmation:
+            enabled: true
     service:
         mailer: fos_user.mailer.twig_swift
     from_email:
