@@ -2,21 +2,29 @@
 
 {% block body %}
 <h1>Solicitudes</h1>
+{% set indice = -1 %}
 {% for cita in citas %}
+	{% set indice = indice + 1 %}
 	<ul>
     	<li>{{ cita.tema }}</li>
     	<li>{{ cita.materia }}</li>
     	<li>{{ cita.cantidad }}</li>
     	<li>
-    		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal{{ cita.id }}">
+    		
+    		{% set indices = "" %}
+    		{% for i in 0..(cita.horario|length - 1) %}
+    			{% set indices = indices ~ "," ~ cita.horario[i] %}
+    		{% endfor %}
+
+    		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-id="{{ cita.id }}" data-tema="{{ cita.tema }}" data-materia="{{ cita.materia }}" data-array="{{ indices }}">
     			Detalles
     		</button>
     	</li>
 	</ul>
+
 {% endfor %}
-{% for cita in citas %}
 	<!-- Modal -->
-	<div class="modal fade" id="infoModal{{ cita.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -30,17 +38,17 @@
 						<form action="{{ path('solicitudes') }}" method="post">
 							<div class="form-group">
 								<label for="tema">Tema</label>
-								<input class="form-control" id="tema" type="text" placeholder={{ cita.tema }} readonly>
+								<input class="form-control" id="tema" type="text" placeholder="" readonly>
 							</div>
 							<div class="form-group">
 								<label for="materia">Materia</label>
-								<input class="form-control" id="materia" type="text" placeholder={{ cita.materia }} readonly>
+								<input class="form-control" id="materia" type="text" placeholder="" readonly>
 							</div>
 							<div class="form-group">
 								<label for="cantidad">Cantidad</label>
-								<input class="form-control" type="text" placeholder={{ cita.cantidad }} readonly>
+								<input class="form-control" type="text" placeholder="" readonly>
 							</div>
-							<input type="hidden" value={{ cita.id }} name="cita_id"/>
+							<input id="input_id" type="hidden" value="" name="cita_id"/>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -50,5 +58,9 @@
 				</div>
 			</div>
 	</div>
-{% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('resources/js/citas/detalles.js') }}"></script>
 {% endblock %}
