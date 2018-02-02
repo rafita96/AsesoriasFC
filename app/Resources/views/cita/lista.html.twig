@@ -10,7 +10,6 @@
                 {% endif %}
             </h1>
         </div>
-            <a class="btn btn-primary float-right" href="{{ path('citas_new') }}">Nueva</a>
 
         <div class="card-body">
             {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
@@ -101,7 +100,7 @@
                 </div>
             </div>
 
-            <h3>Horario Disponible</h3>
+            <h3 class="text-center">Horario Disponible</h3>
             <table id="horario" class="table table-bordered table-dark text-center">
 
             </table>

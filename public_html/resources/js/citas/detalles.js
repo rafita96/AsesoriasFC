@@ -54,7 +54,7 @@ $('#infoModal').on('show.bs.modal', function (event) {
                 }else if(hora == 10){
                     siguiente = 12;
                 }
-                td.innerHTML = hora + ":00 - " + siguiente + ":00"
+                td.innerHTML = hora + ":00-" + siguiente + ":00"
             }else{
                 var index = i*5 + j - 1;
                 if(index == horario[0]){
