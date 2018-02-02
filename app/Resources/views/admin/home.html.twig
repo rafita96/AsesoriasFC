@@ -41,7 +41,7 @@
 							<td>{{ asesor.nombre }}</td>
 							<td>{{ asesor.apaterno }}</td>
 							<td>{{ asesor.amaterno }}</td>
-							<td>Perfil</td>
+							<td><a href="{{ path('admin_asesor', {'matricula': asesor.matricula }) }}" class="btn btn-primary">Perfil</a></td>
 							<td class="col col-sm-1 text-center">
 								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}"><i class="fas fa-trash-alt"></i></button>
 							</td>

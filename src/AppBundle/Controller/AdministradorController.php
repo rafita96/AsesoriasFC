@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Cita;
 
 class AdministradorController extends Controller
 {
@@ -34,7 +35,6 @@ class AdministradorController extends Controller
     public function addAction(Request $request){
         $matricula = $request->request->get('matricula');
         $user = $this->getUser();
-        $alumnos = $user->getAlumnos();
 
         $em = $this->getDoctrine()->getEntityManager();
         $repository = $em->getRepository(Alumno::class);
@@ -85,6 +85,41 @@ class AdministradorController extends Controller
 
         $this->addFlash('success','El asesor fue eliminado correctamente.');
     	return $this->redirectToRoute('admin_home');
+    }
+
+    /**
+     * @Route("/admin/asesor/{matricula}", name="admin_asesor")
+     */
+    public function asesorAction($matricula){
+        $user = $this->getUser();
+
+        // $em = $this->getDoctrine()->getEntityManager();
+        $repository = $this->getDoctrine()->getEntityManager()->getRepository(Alumno::class);
+        $alumno = $repository->findOneByMatricula($matricula);
+        // Si no existe el alumno
+        if(is_null($alumno)){
+            $this->addFlash('danger','No se pudo encontrar al asesor solicitado.');
+            return $this->redirectToRoute('admin_home');                        
+        }else{
+            $asesores = $user->getAlumnos();
+            foreach ($asesores as &$asesor) {            
+                if($asesor == $alumno){
+                    $citas_gen = $this->getDoctrine()
+                                ->getEntityManager()
+                                ->getRepository(Cita::class)->findAll();
+                    $citas = array();
+                    foreach ($citas_gen as &$cita){
+                        if($cita->getAsesor() == '{matricula:'.$matricula.'}'){
+                            array_push($citas, $cita);
+                        }
+                    }
+                    return $this->render('admin/asesor.html.twig', array('citas' => $citas));
+                }
+            }
+        }
+
+        $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
+        return $this->redirectToRoute('admin_home');
     }
 
 }	
