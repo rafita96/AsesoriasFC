@@ -10,8 +10,8 @@
                 {% endif %}
             </h1>
         </div>
-            <a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a>
         <div class="card-body">
+            <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <th class="col-5">Materia</th>
@@ -21,7 +21,6 @@
                         <th class="col-1">{{"Acción"}}</th>
                     {% endif %}
                 </thead>
-
                 <tbody>    
                     {% for cita in citas %}
                     <tr>
@@ -40,27 +39,28 @@
                 </tbody>
             </table>
         </div>
-</div>
+    </div>
 
-{# Eliminar #}
-<div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Advertencia</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    {# Eliminar #}
+    <div class="modal fade" id="eliminarModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Advertencia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            <div class="modal-body" id="contenidoModal">
+                {{ "¿Estás seguro de que quieres eliminar esta cita?" }}
             </div>
 
-        <div class="modal-body" id="contenidoModal">
-            {{ "¿Estás seguro de que quieres eliminar esta cita?" }}
-        </div>
-
-        <div class="modal-footer">
-        <a id="eliminarbtn" class="btn btn-danger" href="">Eliminar</a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+            <div class="modal-footer">
+            <a id="eliminarbtn" class="btn btn-danger" href="">Eliminar</a>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
         </div>
     </div>
 </div>
