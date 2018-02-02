@@ -29,38 +29,34 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Solicitud</h5>
-						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
-						<form action="{{ path('solicitudes') }}" method="post">
-							<div class="form-group">
-								<label for="tema">Tema</label>
-								<input class="form-control" id="tema" type="text" placeholder="" readonly>
+					<form action="{{ path('solicitudes') }}" method="post">
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-4">Tema</div>
+								<div class="col">{{ cita.tema }}</div>
 							</div>
-							<div class="form-group">
-								<label for="materia">Materia</label>
-								<input class="form-control" id="materia" type="text" placeholder="" readonly>
+							<div class="row">
+								<div class="col-4">Materia</div>
+								<div class="col">{{ cita.materia }}</div>
 							</div>
+
 							<div class="form-group">
 								<label for="cantidad">Cantidad</label>
 								<input id="cantidad" class="form-control" type="text" placeholder="" readonly>
 							</div>
-							<input id="input_id" type="hidden" value="" name="cita_id"/>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="submit" class="btn btn-primary">Aceptar Solicitud</button>
-					</div>
+							<input type="hidden" value={{ cita.id }} name="cita_id"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary">Aceptar</button>
+						</div>
 					</form>
 				</div>
 			</div>
-	</div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="{{ asset('resources/js/citas/detalles.js') }}"></script>
+		</div>
+	{% endfor %}
 {% endblock %}
