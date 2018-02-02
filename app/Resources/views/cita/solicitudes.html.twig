@@ -1,58 +1,57 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<div class="row text-center">
-	<div class="card col-12">
-		<div class="card-header">
-            <h1>Solicitudes</h1>
-            {# {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %} {% endif %} #}
-        </div>
-        <div class="card-body">
-        	<table class="table table-bordered table-striped">
-        	    <thead>
-        	        <th class="col-5">Materia</th>
-        	        <th class="col-3">Tema</th>
-        	        <th class="col-2">Alumnos</th>
-        	        <th class="col-2">Detalles</th>
-        	        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-        	            <th class="col-1">{{"Acción"}}</th>
-        	        {% endif %}
-        	    </thead>
-        	    <tbody>    
-        	        {% for cita in citas %}
-        	        <tr>
-        	            <td>{{ cita.materia }}</td>
-        	            <td>{{ cita.tema }}</td>
-        	            <td>{{ cita.cantidad }}</td>
-        	            <td>
-        	                <button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal{{ cita.id }}">Ver</button>
-        	            </td>
-        	            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-        	                <td>
-        	                    <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
-        	                </td>
-        	            {% endif %}
-        	        </tr>
-        	        {% endfor %}
-        	    </tbody>
-        	</table>	
-        </div>
+	<div class="row text-center">
+		<div class="card col-12">
+			<div class="card-header">
+	            <h1>Solicitudes</h1>
+	            {# {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %} {% endif %} #}
+	        </div>
+	        <div class="card-body">
+	        	<table class="table table-bordered table-striped">
+	        	    <thead>
+	        	        <th class="col-5">Materia</th>
+	        	        <th class="col-3">Tema</th>
+	        	        <th class="col-2">Alumnos</th>
+	        	        <th class="col-2">Detalles</th>
+	        	        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+	        	            <th class="col-1">{{"Acción"}}</th>
+	        	        {% endif %}
+	        	    </thead>
+	        	    <tbody>    
+	        	        {% for cita in citas %}
+	        	        <tr>
+	        	            <td>{{ cita.materia }}</td>
+	        	            <td>{{ cita.tema }}</td>
+	        	            <td>{{ cita.cantidad }}</td>
+	        	            <td>
+	        	                <button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal{{ cita.id }}">Ver</button>
+	        	            </td>
+	        	            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+	        	                <td>
+	        	                    <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
+	        	                </td>
+	        	            {% endif %}
+	        	        </tr>
+	        	        {% endfor %}
+	        	    </tbody>
+	        	</table>	
+	        </div>
+		</div>
 	</div>
-</div>
-{% for cita in citas %}
-	<!-- Modal -->
-	<div class="modal fade" id="infoModal{{ cita.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	{% for cita in citas %}
+		<!-- Modal -->
+		<div class="modal fade" id="infoModal{{ cita.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Solicitud</h5>
-						</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body">
-						<form action="{{ path('solicitudes') }}" method="post">
+					<form action="{{ path('solicitudes') }}" method="post">
+						<div class="modal-body">
 							<div class="row">
 								<div class="col-4">Tema</div>
 								<div class="col">{{ cita.tema }}</div>
@@ -66,14 +65,14 @@
 								<div class="col">{{ cita.cantidad }}</div>
 							</div>
 							<input type="hidden" value={{ cita.id }} name="cita_id"/>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="submit" class="btn btn-primary">Aceptar</button>
-					</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="submit" class="btn btn-primary">Aceptar</button>
+						</div>
 					</form>
 				</div>
 			</div>
-	</div>
-{% endfor %}
+		</div>
+	{% endfor %}
 {% endblock %}

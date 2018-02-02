@@ -72,14 +72,18 @@ class Cita
     /**
      * @ORM\Column(name="dia_creado", type="datetime")
      */
-    private $diaCreado;    
+    private $diaCreado;  
+
+    /**
+     * @ORM\Column(name="expiracion", type="datetime")
+     */  
+    private $expiracion;
 
     /**
      * @ORM\PrePersist
      */
     public function saveOnPrePersist()
     {
-        date_default_timezone_set('America/Tijuana');
         $this->diaCreado = new \DateTime();
     }
 
@@ -284,5 +288,29 @@ class Cita
     public function getDiaCreado()
     {
         return $this->diaCreado;
+    }
+
+    /**
+     * Set expiracion
+     *
+     * @param \DateTime $expiracion
+     *
+     * @return Cita
+     */
+    public function setExpiracion($expiracion)
+    {
+        $this->expiracion = $expiracion;
+
+        return $this;
+    }
+
+    /**
+     * Get expiracion
+     *
+     * @return \DateTime
+     */
+    public function getExpiracion()
+    {
+        return $this->expiracion;
     }
 }

@@ -39,6 +39,36 @@ class CitaController extends Controller
             $cita->setAlumno($alumno);
             $cita->setEstado(0);
 
+            $horario = json_decode("[".$cita->getHorario()."]");
+            sort($horario);
+            $cita = $cita->setHorario($horario);
+
+            $max = $horario[0];
+            foreach ($cita->getHorario() as $indice) {
+                if($indice%5 == $max%5 && $indice > $max){
+                    $max = $indice;
+                }
+                else if($indice%5 > $max%5){
+                    $max = $indice;    
+                }
+            }
+
+            date_default_timezone_set('America/Tijuana');
+            $expiracion = new \DateTime();
+            $dia = intval($expiracion->format('w'));
+
+            if($dia > $max%5){
+                $suma = (7 - $dia) + $max%5 + 1;
+            }else{
+                $suma = $dia - $max%5 + 1;
+            }
+            $expiracion->modify("+".$suma." days");
+
+            $hora = floor($max/5)*2 + 8;
+            $expiracion->setTime($hora, 0, 0);
+            
+            $cita->setExpiracion($expiracion);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($cita);
             $em->flush();
