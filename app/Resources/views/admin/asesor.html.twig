@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="col-md-10 offset-md-1">
+		<div class="row">
+			<div class="col">
+				{% if app.session.flashbag.peekAll()|length > 0 %}
+					{% for tipo, flashes in app.flashes() %}
+						{% for flash in flashes %}
+						    <div class="alert alert-{{tipo}} alert-dismissible fade show" role="alert">
+						    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    		<span aria-hidden="true">&times;</span>
+						    	</button>
+						    	{{ flash }}
+						    </div>
+						{% endfor %}
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
+		    <div class="col"><h1 class="text-center"> Historial </h1></div>
+		</div>
+		<div class="row">
+			<table class="table table-bordered table-striped table-responsive">
+				<thead>
+			    	<tr>
+			      		<th>Tema</th>
+						<th>Materia</th>
+						<th>Cantidad</th>
+						<th>ID Alumno</th>
+						<th>Estado</th>
+						<th>Detalles</th>
+			    	</tr>
+			  	</thead>
+				<tbody>
+					{% for cita in citas %}
+						<tr>
+							<td>{{ cita.tema }}</td>
+							<td>{{ cita.materia }}</td>
+							<td>{{ cita.cantidad }}</td>
+							<td>{{ cita.alumno }}</td>
+							<td>{{ cita.estado }}</td>
+							<td class="col col-sm-1 text-center">
+								<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#">Ver</button>
+							</td>
+						</tr>
+					{% endfor %}
+			  	</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
