@@ -75,6 +75,11 @@ class Cita
     private $diaCreado;  
 
     /**
+     * @ORM\Column(name="fecha", type="datetime", nullable=true)
+     */  
+    private $fecha;
+
+    /**
      * @ORM\Column(name="expiracion", type="datetime")
      */  
     private $expiracion;
@@ -312,5 +317,29 @@ class Cita
     public function getExpiracion()
     {
         return $this->expiracion;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     *
+     * @return Cita
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
     }
 }

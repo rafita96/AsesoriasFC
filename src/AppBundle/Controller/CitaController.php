@@ -130,7 +130,7 @@ class CitaController extends Controller
     }
 
     /**
-     * @Route("/solicitudes", name="solicitudes")
+     * @Route("/solicitudes/", name="solicitudes")
      */
     public function solicitudesAction(Request $request){
         $roles = $this->getUser()->getRoles();
@@ -158,5 +158,60 @@ class CitaController extends Controller
         }
 
         return $this->redirectToRoute('citas');
+    }
+
+    /**
+     * @Route("/solicitudes/detalles/{id}", name="solicitudes_detalles")
+     */
+    public function detallesAction(Request $request, $id){
+        $repository = $this->getDoctrine()->getRepository(Cita::class);
+        $cita = $repository->findOneById($id);
+        
+        if($cita){
+            return $this->render('cita/detalles.html.twig', array(
+                'cita' => $cita,
+            )); 
+        }
+        
+        throw new NotFoundHttpException("Elemento no encontrado.");
+    }
+
+    /**
+     * @Route("/solicitudes/aceptar", name="solicitudes_aceptar")
+     */
+    public function aceptarAction(Request $request){
+        $id = $request->request->get('id');
+
+        $repository = $this->getDoctrine()->getRepository(Cita::class);
+        $cita = $repository->findOneById($id);
+
+        $roles = $this->getUser()->getRoles();
+        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles) ||
+            !($this->getUser()->getAsesor())){
+            return $this->render('cita/detalles.html.twig', array(
+                'cita' => $cita,
+            ));
+        }
+
+        if($cita->getAsesor()){
+            throw new NotFoundHttpException("La cita fue agendada por otra persona.");
+        }
+
+        $fecha = $request->request->get('fecha');
+        $hora = $request->request->get('hora');
+
+        $date = new \DateTime($fecha." ".$hora.":0:0");
+        $cita->setFecha($date);
+
+        $expiracion = clone $date;
+        $expiracion->modify("+2 hours");
+        $cita->setExpiracion($expiracion);
+        $cita->setAsesor($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cita);
+        $em->flush();
+
+        return $this->redirectToRoute('citas'); 
     }
 }

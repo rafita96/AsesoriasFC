@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="row">
+    <div class="card col-12">
+        <div class="card-heading">
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="tema">Tema</label>
+                <input class="form-control" id="tema" type="text" placeholder="{{ cita.tema }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="materia">Materia</label>
+                <input class="form-control" id="materia" type="text" placeholder="{{ cita.materia }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad</label>
+                <input id="cantidad" class="form-control" type="text" placeholder="{{ cita.cantidad }}" readonly>
+            </div>
+
+            <h3 class="text-center">Horario Disponible</h3>
+            <table id="horario" class="table table-bordered table-dark text-center horario">
+            </table>
+
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
+            <form id="aceptar_form" action="{{ path('solicitudes_aceptar') }}" method="post">
+                <input type="hidden" name="id" value="{{ cita.id }}">
+                <input id="fecha_input" type="hidden" name="fecha" value="">
+                <input id="hora_input" type="hidden" name="hora" value="">
+            {% endif %}
+        </div>
+        <div class="card-footer">
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
+                <button type="submit" class="btn btn-success">Aceptar</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var dia = new Date("{{ cita.diaCreado|date('Y-m-d h:m:s') }}");
+        var horario = JSON.parse("{{ cita.horario|json_encode|raw }}");
+    </script>
+    <script type="text/javascript" src="{{ asset('resources/js/citas/detalles_v2.js') }}"></script>
+{% endblock %}
