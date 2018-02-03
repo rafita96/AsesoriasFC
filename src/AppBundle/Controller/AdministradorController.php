@@ -108,12 +108,16 @@ class AdministradorController extends Controller
                                 ->getEntityManager()
                                 ->getRepository(Cita::class)->findAll();
                     $citas = array();
+                    $nombres = array();
                     foreach ($citas_gen as &$cita){
                         if($cita->getAsesor() == '{matricula:'.$matricula.'}'){
                             array_push($citas, $cita);
+                            $asesorado = $repository->findOneById($cita->getAlumno());
+                            $nombre = $asesorado->getNombre()." ".$asesorado->getAPaterno()." ".$asesorado->getAMaterno();
+                            array_push($nombres, $nombre);
                         }
                     }
-                    return $this->render('admin/asesor.html.twig', array('citas' => $citas));
+                    return $this->render('admin/asesor.html.twig', array('citas' => $citas, 'nombres' => $nombres));
                 }else{
                     $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
                     return $this->redirectToRoute('admin_home');

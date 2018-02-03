@@ -25,26 +25,30 @@
 			<table class="table table-bordered table-striped table-responsive">
 				<thead>
 			    	<tr>
+			    		<th>ID</th>
 			      		<th>Tema</th>
 						<th>Materia</th>
 						<th>Cantidad</th>
-						<th>ID Alumno</th>
+						<th>Alumno</th>
 						<th>Estado</th>
 						<th>Detalles</th>
 			    	</tr>
 			  	</thead>
 				<tbody>
+					{% set i = 0 %}
 					{% for cita in citas %}
 						<tr>
+							<td>{{ cita.id }}</td>
 							<td>{{ cita.tema }}</td>
 							<td>{{ cita.materia }}</td>
 							<td>{{ cita.cantidad }}</td>
-							<td>{{ cita.alumno }}</td>
+							<td>{{ nombres[i] }}</td>
 							<td>{{ cita.estado }}</td>
 							<td class="col col-sm-1 text-center">
 								<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#">Ver</button>
 							</td>
 						</tr>
+						{% set i = i + 1 %}
 					{% endfor %}
 			  	</tbody>
 			</table>
