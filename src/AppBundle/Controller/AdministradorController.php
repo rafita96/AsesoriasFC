@@ -114,12 +114,12 @@ class AdministradorController extends Controller
                         }
                     }
                     return $this->render('admin/asesor.html.twig', array('citas' => $citas));
+                }else{
+                    $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
+                    return $this->redirectToRoute('admin_home');
                 }
             }
         }
-
-        $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
-        return $this->redirectToRoute('admin_home');
     }
 
 }	
