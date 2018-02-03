@@ -1,5 +1,9 @@
 {% extends "::base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('resources/css/tabla.css') }}">
+{% endblock %}
 {% block body %}
 <div class="row">
     <div class="card col-12">
@@ -18,7 +22,7 @@
             <h3 class="text-center">Horario disponible</h3>
             <h5 class="text-center">{{"(Haga click sobre algún cuadro para seleccionar)"}}</h5>
             
-            <table class="table table-bordered table-dark text-center table-responsive{-sm|-md|-lg|-xl} col-12" id="horario"></table>
+            <table class="table table-striped table-bordered" id="horario"></table>
         </div>
 
         <button class="btn btn-success" type="submit">Guardar</button>

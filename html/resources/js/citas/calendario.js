@@ -1,4 +1,4 @@
-var horario, input;
+var horario, input, fechas;
 $(document).ready(function() {
     input = document.getElementById('appbundle_cita_horario');
     input.value = "";
@@ -6,10 +6,11 @@ $(document).ready(function() {
     horario = new Array();
 
     var tabla = document.getElementById('horario');
+    var thead = document.createElement("thead");
     var tr = document.createElement("tr");
 
     var dia = new Date();
-    var fechas = new Array(0,0,0,0,0);
+    fechas = new Array(0,0,0,0,0);
 
     for(var i = 0; i < 7; i++){
         var res = (i+dia.getDay())%7;
@@ -28,15 +29,16 @@ $(document).ready(function() {
     agregarEncabezado(tr, "Miércoles", fechaACorta(fechas[2]));
     agregarEncabezado(tr, "Jueves", fechaACorta(fechas[3]));
     agregarEncabezado(tr, "Viernes", fechaACorta(fechas[4]));
-    tabla.appendChild(tr);
+    thead.appendChild(tr);
+    tabla.appendChild(thead);
     // console.log(fechas);
 
+    var tbody = document.createElement("tbody");
     for(var i = 0; i < 5; i++){
         var tr = document.createElement("tr");
 
         for(var j = 0; j < 6; j++){
             var td = document.createElement("td");
-            td.setAttribute("class", "col-1");
 
             if(j == 0){
                 var hora = (2*i + 8)%12;
@@ -46,6 +48,7 @@ $(document).ready(function() {
                 }else if(hora == 10){
                     siguiente = 12;
                 }
+                td.setAttribute("class", "col-1 hora")
                 td.innerHTML = hora + ":00 - " + siguiente + ":00"
             }else{
                 td.index = i*5 + j - 1;
@@ -57,14 +60,14 @@ $(document).ready(function() {
                         var quitar = horario.indexOf(this.index);
                         if (quitar > -1) {
                             horario.splice(quitar, 1);
-                            this.setAttribute("class","col-1");
+                            this.setAttribute("class","");
                         }
 
                     }else{
                         this.selected = true;
                         if(horario.indexOf(this.index) == -1){
                             horario.push(this.index);
-                            this.setAttribute("class","col-1 bg-info");
+                            this.setAttribute("class","bg-info");
                         }
                     }
                     
@@ -74,21 +77,28 @@ $(document).ready(function() {
 
             tr.appendChild(td);
         }
-        tabla.appendChild(tr);
+        tbody.appendChild(tr);
+    }
+
+    tabla.appendChild(tbody);
+    
+    if($(window).width() < 760){
+        resizeTable();
     }
 });
 
 function agregarEncabezado(tr, dia, fecha){
     var th = document.createElement("th");
+    th.setAttribute("class","col-1");
     var row = document.createElement("div");
     row.setAttribute("class", "row text-center");
 
     var col1 = document.createElement("div");
-    col1.setAttribute("class", "col-12");
+    col1.setAttribute("class","col-12");
     col1.innerHTML = dia;
 
     var col2 = document.createElement("div");
-    col2.setAttribute("class", "col-12");
+    col2.setAttribute("class","col-12");
     col2.innerHTML = fecha;
 
     row.appendChild(col1);
@@ -115,3 +125,14 @@ $("form[name='appbundle_cita']").submit(function(e){
 
     return true;
 });
+
+function resizeTable(){
+    var tabla = $(".table");
+
+    var dias = ["Lunes "+fechaACorta(fechas[0]), "Martes "+fechaACorta(fechas[1]), 
+            "Mi\u00E9rcoles "+fechaACorta(fechas[2]), "Jueves "+fechaACorta(fechas[3]), 
+            "Viernes "+fechaACorta(fechas[4])];
+    for(var i = 1; i < 6; i++){
+        tabla.find('tbody tr:nth-child(' + i + ') td:first-child').before("<tr><td col-span='2'>"+dias[i-1]+"</td></tr>");
+    }
+} 
