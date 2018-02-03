@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * Alumno
@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="alumno")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AlumnoRepository")
  */
-class Alumno implements UserInterface, \Serializable
+class Alumno extends BaseUser
 {
     /**
      * @var int
@@ -20,12 +20,12 @@ class Alumno implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="matricula", type="string", length=10, unique=true)
+     * @ORM\Column(name="matricula", type="string", length=10, unique=true, nullable=true)
      */
     private $matricula;
 
@@ -74,6 +74,13 @@ class Alumno implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Cita", mappedBy="alumno, asesor", cascade={"persist"})
      */
     private $citas;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id", type="string", nullable=true)
+     */
+    protected $googleID;
 
     /**
      * Get id
@@ -402,5 +409,29 @@ class Alumno implements UserInterface, \Serializable
     public function getCorreo()
     {
         return $this->correo;
+    }
+
+    /**
+     * Set googleID.
+     *
+     * @param string|null $googleID
+     *
+     * @return Alumno
+     */
+    public function setGoogleID($googleID = null)
+    {
+        $this->googleID = $googleID;
+
+        return $this;
+    }
+
+    /**
+     * Get googleID.
+     *
+     * @return string|null
+     */
+    public function getGoogleID()
+    {
+        return $this->googleID;
     }
 }

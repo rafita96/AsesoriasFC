@@ -10,7 +10,14 @@
 {% block body %}
 <div class="row align-middle">
     <div class="col-12">
-        <form class="form-signin" action="{{ path('login') }}" method="post">
+    
+        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}" >
+            Connect with Google
+        </a>
+        {#<a href="{{ path('hwi_oauth_service_redirect', {'service': 'google'}) }}" >
+                    Connect with Google
+                </a>#}
+       {#<form class="form-signin" action="{{ path('login') }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input type="hidden" id="password" name="_password" />
             <input type="hidden" name="_target_path" value="/" />
@@ -25,7 +32,14 @@
                     <input type="submit" id="_submit" class="btn btn-lg btn-success btn-block" name="_submit" value="Entrar" />
                 </div>
             </div>
-        </form>
+        </form>#}
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+{% endblock %}
+

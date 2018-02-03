@@ -15,7 +15,7 @@ security:
             id: fos_user.user_provider.username
 
         user_db:
-            id: AppBundle\Security\User\WebserviceUserProvider
+            id: AppBundle\Security\User\OAuthUserProvider
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -45,13 +45,17 @@ security:
 
         wsse_secured:
             pattern: ^/
-            wsse: true
+            oauth:
+                provider: user_db
+                resource_owners:
+                    google: "/login/check-google"
+                login_path: /login
+                check_path: /connect
+                use_forward: false
+                failure_path: /login
 
-            provider: user_db
-            simple_form:
-                authenticator: AppBundle\Security\MyAuthenticator
-                login_path: login 
-                check_path: login
+                oauth_user_provider:
+                    service: AppBundle\Security\User\OAuthUserProvider
 
             logout: true
             anonymous: true
