@@ -38,5 +38,5 @@ services:
 
     AppBundle\Security\User\OAuthUserProvider:
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@fos_user.user_manager'
             - [googleID]
