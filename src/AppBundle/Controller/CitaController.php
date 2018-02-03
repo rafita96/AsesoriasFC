@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CitaController extends Controller
 {
     /**
-     * @Route("/citas/new", name="citas_new")
+     * @Route("/solicitud/new", name="citas_new")
      */
     public function newAction(Request $request)
     {
@@ -106,7 +106,7 @@ class CitaController extends Controller
     }
 
     /**
-     * @Route("/citas/eliminar/{id}", name="citas_eliminar")
+     * @Route("/solicitud/eliminar/{id}", name="citas_eliminar")
      */
     public function eliminarAction(Request $request, $id){
         $alumno = $this->getUser();
@@ -161,7 +161,7 @@ class CitaController extends Controller
     }
 
     /**
-     * @Route("/solicitudes/detalles/{id}", name="solicitudes_detalles")
+     * @Route("/solicitud/detalles/{id}", name="solicitudes_detalles")
      */
     public function detallesAction(Request $request, $id){
         $repository = $this->getDoctrine()->getRepository(Cita::class);
@@ -177,7 +177,7 @@ class CitaController extends Controller
     }
 
     /**
-     * @Route("/solicitudes/aceptar", name="solicitudes_aceptar")
+     * @Route("/solicitud/aceptar", name="solicitudes_aceptar")
      */
     public function aceptarAction(Request $request){
         $id = $request->request->get('id');
