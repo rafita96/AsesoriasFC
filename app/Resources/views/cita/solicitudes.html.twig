@@ -4,7 +4,7 @@
 <div class="row text-center">
     <div class="card col-12">
         <div class="card-header">
-            <h1>Citas
+            <h1>Solicitudes
                 {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 
                 {% endif %}
@@ -27,7 +27,8 @@
 	                        <td>{{ cita.materia }}</td>
 	                        <td>{{ cita.tema }}</td>
 	                        <td>
-	                            <button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal{{cita.id}}">Ver</button>
+                                <a class="btn btn-secondary" href="{{ path('solicitudes_detalles',{'id': cita.id }) }}">Ver</a>
+	                            {#<button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal{{cita.id}}">Ver</button>#}
 	                        </td>
 	                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 	                            <td>
