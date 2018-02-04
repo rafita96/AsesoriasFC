@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block navbar %}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        El asesor {{ asesor.nombre ~ " " ~ asesor.aPaterno ~ " " ~ asesor.aMaterno }} ha aceptado tu solicitud, su correo es {{ asesor.correo ~ "@uabc.edu.mx" }}. La fecha de la {{"asesoría"}} es {{ cita.fecha|date("d/m/Y") }} a las {{ cita.fecha|date("H:i") }}.
+    </div>
+</div>
+{% endblock %}

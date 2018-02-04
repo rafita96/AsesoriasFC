@@ -191,7 +191,7 @@ class CitaController extends Controller
     /**
      * @Route("/solicitud/aceptar", name="solicitudes_aceptar")
      */
-    public function aceptarAction(Request $request){
+    public function aceptarAction(Request $request, \Swift_Mailer $mailer){
         $id = $request->request->get('id');
 
         $repository = $this->getDoctrine()->getRepository(Cita::class);
@@ -223,6 +223,32 @@ class CitaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($cita);
         $em->flush();
+
+        $message = (new \Swift_Message('Tu solicitud ha sido aprobada.'))
+        ->setFrom('asesoriasfc@uabc.ens.mx')
+        ->setTo($cita->getAlumno()->getCorreo()."@uabc.edu.mx")
+        ->setBody(
+            $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                'emails/aprobada.html.twig',
+                array('asesor' => $this->getUser(),
+                        'cita' => $cita)
+            ),
+            'text/html'
+        )
+        /*
+         * If you also want to include a plaintext version of the message
+        ->addPart(
+            $this->renderView(
+                'Emails/registration.txt.twig',
+                array('name' => $name)
+            ),
+            'text/plain'
+        )
+        */
+        ;
+
+        $mailer->send($message);
 
         return $this->redirectToRoute('citas'); 
     }

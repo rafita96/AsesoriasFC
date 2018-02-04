@@ -2,12 +2,11 @@
 
 {% block body %}
     <div class="row text-center">
+    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
         <div class="card col-12">
             <div class="card-header">
                 <h1>Pendientes
-                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
-
-                    {% endif %}
+                    
                 </h1>
             </div>
             <div class="card-body">
@@ -42,7 +41,7 @@
                 </table>
             </div>
         </div>
-
+    {% endif %}
         <div class="card col-12">
             <div class="card-header">
                 <h1>Citas
@@ -59,7 +58,9 @@
                     <thead>
                         <th class="col-4">Materia</th>
                         <th class="col-4">Tema</th>
+                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
                         <th class="col-3">Asesor</th>
+                        {% endif %}
                         <th class="col-1">Detalles</th>
                     </thead>
                     <tbody>    
@@ -68,7 +69,9 @@
                                 <tr>
                                     <td>{{ cita.materia }}</td>
                                     <td>{{ cita.tema }}</td>
+                                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
                                     <td>{{ cita.asesor.nombre ~ " " ~ cita.asesor.aPaterno ~ " " ~ cita.asesor.aMaterno }}</td>
+                                    {% endif %}
                                     <td><a class="btn btn-secondary" href="{{ path('solicitudes_detalles',{'id': cita.id }) }}">Ver</a></td>
                                 </tr>
                             {% endif %}
