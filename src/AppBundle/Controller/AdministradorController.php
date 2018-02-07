@@ -45,6 +45,13 @@ class AdministradorController extends Controller
             $alumno->setMatricula($matricula);
             $alumno->setIsActive(true);
             $alumno->setAsesor(true);
+            $validator = $this->get('validator');
+            $errors = $validator->validate($alumno);
+            if(count($errors) > 0){
+                $this->addFlash('danger','La matrícula ingresada no es válida.');
+                return $this->redirectToRoute('admin_home');
+            }
+
         }else{
             $asesores = $user->getAlumnos();
             foreach ($asesores as &$asesor) {            
@@ -104,6 +111,7 @@ class AdministradorController extends Controller
             $asesores = $user->getAlumnos();
             foreach ($asesores as &$asesor) {            
                 if($asesor == $alumno){
+                    $asesor_nombre = $asesor->getNombre()." ".$asesor->getAPaterno()." ".$asesor->getAMaterno();
                     $citas_gen = $this->getDoctrine()
                                 ->getEntityManager()
                                 ->getRepository(Cita::class)->findAll();
@@ -117,12 +125,12 @@ class AdministradorController extends Controller
                             array_push($nombres, $nombre);
                         }
                     }
-                    return $this->render('admin/asesor.html.twig', array('citas' => $citas, 'nombres' => $nombres));
-                }else{
-                    $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
-                    return $this->redirectToRoute('admin_home');
+                    return $this->render('admin/asesor.html.twig', array('citas' => $citas, 'asesor_nombre' => $asesor_nombre, 'nombres' => $nombres));
                 }
             }
+            return new Response($asesor->getId()." ".$alumno->getId());
+            $this->addFlash('danger','El asesor solicitado no esta asociado a su cuenta.');
+            return $this->redirectToRoute('admin_home');
         }
     }
 

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Alumno
@@ -25,13 +26,17 @@ class Alumno implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 8
+     * )
      * @ORM\Column(name="matricula", type="string", length=10, unique=true)
      */
     private $matricula;
 
     /**
      * @var string
-     *
+     * 
      * @ORM\Column(name="nombre", type="string", length=100, nullable=true)
      */
     private $nombre;
