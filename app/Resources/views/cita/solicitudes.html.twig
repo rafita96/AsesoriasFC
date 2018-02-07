@@ -5,13 +5,14 @@
     <div class="card col">
         <div class="card-header">
             <h1>SOLICITUDES
-                {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                
 
-                {% endif %}
+                
             </h1>
         </div>
         <div class="card-body">
-            <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+            <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>{% endif %}
             <table class="table table-bordered table-striped">
                 <thead>
                     <th class="col-5">Materia</th>

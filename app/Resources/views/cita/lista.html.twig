@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>    
                         {% for cita in citas %}
-                            {% if cita.asesor == null %}
+                            {% if cita.estado == 0 %}
                                 <tr>
                                     <td>{{ cita.materia }}</td>
                                     <td>{{ cita.tema }}</td>
