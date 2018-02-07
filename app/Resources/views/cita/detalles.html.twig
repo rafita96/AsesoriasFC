@@ -21,31 +21,49 @@
                 <input id="cantidad" class="form-control" type="text" placeholder="{{ cita.cantidad }}" readonly>
             </div>
 
-            {% if cita.asesor != null %}
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
                 <div class="form-group">
-                    <label for="asesor">Asesor</label>
-                    <input id="asesor" class="form-control" type="text" placeholder="{{ cita.asesor.nombre ~ " " ~ cita.asesor.aPaterno ~ " " ~ cita.asesor.aMaterno }}" readonly>
+                    <label for="asesor">Alumno</label>
+                    <input id="asesor" class="form-control" type="text" placeholder="{{ cita.alumno.nombre ~ " " ~ cita.alumno.aPaterno ~ " " ~ cita.alumno.aMaterno }}" readonly>
                 </div>
 
                 <div class="form-group">
-                    <label for="correo">Correo del Asesor</label>
-                    <input id="correo" class="form-control" type="text" placeholder="{{ cita.asesor.correo ~ "@uabc.edu.mx" }}" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="fecha">{{"Cita para Asesoría"}}</label>
-                    <input id="fecha" class="form-control" type="text" placeholder="{{ cita.fecha|date('d-m-Y H:i') }}" readonly>
+                    <label for="correo">Correo del Alumno</label>
+                    <input id="correo" class="form-control" type="text" placeholder="{{ cita.alumno.correo ~ "@uabc.edu.mx" }}" readonly>
                 </div>
             {% else %}
+                {% if cita.asesor != null %}
+                    <div class="form-group">
+                        <label for="asesor">Asesor</label>
+                        <input id="asesor" class="form-control" type="text" placeholder="{{ cita.asesor.nombre ~ " " ~ cita.asesor.aPaterno ~ " " ~ cita.asesor.aMaterno }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo del Asesor</label>
+                        <input id="correo" class="form-control" type="text" placeholder="{{ cita.asesor.correo ~ "@uabc.edu.mx" }}" readonly>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+
+            {% if cita.asesor == null %}
                 <div class="form-group">
                     <label for="asignar">Estado</label>
                     <input id="asignar" class="form-control" type="text" placeholder="Sin Asignar" readonly>
                 </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="fecha">{{"Cita para Asesoría"}}</label>
+                    <input id="fecha" class="form-control" type="text" placeholder="{{ cita.fecha|date('d-m-Y H:i') }}" readonly>
+                </div>
             {% endif %}
+
             {% if cita.asesor == null %}
                 <div class="form-group">
                     <h3 class="text-center">Horario Disponible</h3>
-                    <h5 class="text-center">{{"(Haga click sobre algún cuadro para seleccionar)"}}</h5>
+                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and app.user.asesor %}
+                        <h5 class="text-center">{{"(Haga click sobre algún cuadro para seleccionar)"}}</h5>
+                    {% endif %}
                     <table id="horario" class="table table-bordered table-dark text-center horario">
                     </table>
                 </div>

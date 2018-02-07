@@ -66,6 +66,14 @@ class AdministradorController extends Controller
         $user->addAlumno($alumno);
         $alumno->addUser($user);
 
+        $repositoryC = $this->getDoctrine()->getRepository(Cita::class);
+        $solicitudes = $repositoryC->findBySolicitudes($alumno);
+        foreach ($solicitudes as $solicitud) {
+            $solicitud->setEstado(Cita::EXPIRADO);
+            $em->persist($solicitud);
+            $em->flush();
+        }
+
         $em->persist($user);
         $em->persist($alumno);
         $em->flush();

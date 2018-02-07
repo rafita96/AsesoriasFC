@@ -20,4 +20,14 @@ class CitaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter("alumno", $alumno)
             ->getOneOrNullResult();
     }
+
+    public function findBySolicitudes($alumno)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.alumno = :alumno'
+            )
+            ->setParameter("alumno", $alumno)
+            ->getResult();
+    }
 }

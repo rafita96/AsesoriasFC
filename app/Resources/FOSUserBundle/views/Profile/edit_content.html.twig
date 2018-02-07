@@ -1,0 +1,13 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<body>
+    {{ form_start(form) }}
+    {{ form_label(form.email) }}
+    <div class="input-group mb-3">
+    {{ form_widget(form.email) }}
+        <div class="input-group-append">
+            <span class="input-group-text">@uabc.edu.mx</span>
+        </div>
+    </div>
+    {{ form_errors(form.email) }}
+    {{ form_end(form) }}
+</body>

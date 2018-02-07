@@ -43,10 +43,20 @@ class Cita
      */
     private $cantidad;
 
+    public const PENDIENTE = 0;
+    public const CITADO = 1;
+    public const FINALIZADO = 2;
+    public const EXPIRADO = 3;
+    
     /**
-     * @var bool
+     * @var int
      * 
-     * @ORM\Column(name="estado", type="boolean")
+     * 0 - Pendiente
+     * 1 - Citado
+     * 2 - Finalizado
+     * 3 - Expirado 
+     *
+     * @ORM\Column(name="estado", type="integer")
      */
     private $estado;
 

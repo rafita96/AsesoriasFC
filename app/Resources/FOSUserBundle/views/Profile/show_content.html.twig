@@ -27,7 +27,12 @@
         </div>
 
         <div class="card-footer">
-            {# <a class="btn btn-secondary" href="{{ path('registro') }}">Editar Perfil</a> #}
+            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
+                <a class="btn btn-secondary" href="{{ path('registro') }}">Editar Perfil</a>
+            {% else %}
+                <a class="btn btn-secondary" href="{{ path('admin_perfil_editar') }}">Editar Perfil</a>
+            {% endif %}
+            
         </div>
     </div>
 </div>

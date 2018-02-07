@@ -37,7 +37,7 @@ class CitaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $cita->setAlumno($alumno);
-            $cita->setEstado(0);
+            $cita->setEstado($cita->PENDIENTE);
 
             $horario = json_decode("[".$cita->getHorario()."]");
             sort($horario);
@@ -156,7 +156,7 @@ class CitaController extends Controller
                 $em->flush();
             }
             $repository = $this->getDoctrine()->getRepository(Cita::class);
-            $citas = $repository->findByAsesor(null);
+            $citas = $repository->findByEstado(Cita::PENDIENTE);
 
             return $this->render('cita/solicitudes.html.twig', array(
                 'citas' => $citas,
@@ -220,6 +220,8 @@ class CitaController extends Controller
         $cita->setExpiracion($expiracion);
         $cita->setAsesor($this->getUser());
 
+        $cita->setEstado(Cita::CITADO);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($cita);
         $em->flush();
@@ -236,16 +238,6 @@ class CitaController extends Controller
             ),
             'text/html'
         )
-        /*
-         * If you also want to include a plaintext version of the message
-        ->addPart(
-            $this->renderView(
-                'Emails/registration.txt.twig',
-                array('name' => $name)
-            ),
-            'text/plain'
-        )
-        */
         ;
 
         $mailer->send($message);
