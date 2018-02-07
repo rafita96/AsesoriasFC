@@ -1,106 +1,112 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="col-md-10 offset-md-1">
-		<div class="row">
-			<div class="col">
-				{% if app.session.flashbag.peekAll()|length > 0 %}
-					{% for tipo, flashes in app.flashes() %}
-						{% for flash in flashes %}
-						    <div class="alert alert-{{tipo}} alert-dismissible fade show" role="alert">
-						    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						    		<span aria-hidden="true">&times;</span>
-						    	</button>
-						    	{{ flash }}
-						    </div>
-						{% endfor %}
+	<div class="row">
+		<div class="col">
+			{% if app.session.flashbag.peekAll()|length > 0 %}
+				{% for tipo, flashes in app.flashes() %}
+					{% for flash in flashes %}
+					    <div class="alert alert-{{tipo}} alert-dismissible fade show" role="alert">
+					    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    		<span aria-hidden="true">&times;</span>
+					    	</button>
+					    	{{ flash }}
+					    </div>
 					{% endfor %}
-				{% endif %}
-			</div>
+				{% endfor %}
+			{% endif %}
 		</div>
-		<div class="row">
-		    <div class="col-md-10"><h1 class="text-center"> ASESORES </h1></div>
-		    <div class="col-md-1"><button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#aAsesor">Agregar</button></div>
-		</div>
-		<div class="row">
-			<table class="table table-bordered table-striped table-responsive">
-				<thead>
-			    	<tr>
-			      		<th>Matrícula</th>
-						<th>Nombre</th>
-						<th>Apellido Paterno</th>
-						<th>Apellido Materno</th>
-						<th>Perfil</th>
-						<th>Eliminar</th>
-			    	</tr>
-			  	</thead>
-				<tbody>
-					{% for asesor in asesores %}
-						<tr>
-							<td>{{ asesor.matricula }}</td>
-							<td>{{ asesor.nombre }}</td>
-							<td>{{ asesor.apaterno }}</td>
-							<td>{{ asesor.amaterno }}</td>
-							<td><a href="{{ path('admin_asesor', {'matricula': asesor.matricula }) }}" class="btn btn-primary">Perfil</a></td>
-							<td class="col col-sm-1 text-center">
-								<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}"><i class="fas fa-trash-alt"></i></button>
-							</td>
-						</tr>
-						{# INICIO MODAL ELIMINAR #}
-						<div class="modal fade" id="eAsesor{{asesor.id}}" tabindex="-1" role="dialog" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title">¿Desea eleminar a este asesor?</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<div class="alert alert-danger"> 
-											{{ asesor.nombre }} {{ asesor.apaterno }} {{ asesor.amaterno }} con la matrícula: {{asesor.matricula}} <br/>
-											Una vez realizada esta acción no se podrá deshacer.
+	</div>	
+	<div class="row text-center">
+	    <div class="card col-12">
+	    	<div class="card-header">
+	    	    <h1>ASESORES</h1>
+	    	</div>
+			<div class="card-body">
+				<div class="row pb-2">
+					<div class="col">
+						<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#aAsesor">Agregar</button>
+					</div>
+				</div>
+				<table class="table table-bordered table-striped">
+					<thead>
+				    	<tr>
+				      		<th>Matrícula</th>
+							<th>Nombre</th>
+							<th>Apellido Paterno</th>
+							<th>Apellido Materno</th>
+							<th>Perfil</th>
+							<th>Eliminar</th>
+				    	</tr>
+				  	</thead>
+					<tbody>
+						{% for asesor in asesores %}
+							<tr>
+								<td>{{ asesor.matricula }}</td>
+								<td>{{ asesor.nombre }}</td>
+								<td>{{ asesor.apaterno }}</td>
+								<td>{{ asesor.amaterno }}</td>
+								<td><a href="{{ path('admin_asesor', {'matricula': asesor.matricula }) }}" class="btn btn-primary">Perfil</a></td>
+								<td class="col col-sm-1 text-center">
+									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}"><i class="fas fa-trash-alt"></i></button>
+								</td>
+							</tr>
+							{# INICIO MODAL ELIMINAR #}
+							<div class="modal fade" id="eAsesor{{asesor.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">¿Desea eleminar a este asesor?</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
 										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
-										<a href="{{ path('admin_remove', {'id': asesor.id }) }}" class="btn btn-danger btn-sm">Eliminar</a>
+										<div class="modal-body">
+											<div class="alert alert-danger"> 
+												{{ asesor.nombre }} {{ asesor.apaterno }} {{ asesor.amaterno }} con la matrícula: {{asesor.matricula}} <br/>
+												Una vez realizada esta acción no se podrá deshacer.
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+											<a href="{{ path('admin_remove', {'id': asesor.id }) }}" class="btn btn-danger btn-sm">Eliminar</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						{# FIN MODAL #}
-					{% endfor %}
-			  	</tbody>
-			</table>
+							{# FIN MODAL #}
+						{% endfor %}
+				  	</tbody>
+				</table>
+			</div>
 		</div>
-		{# INICIO MODAL AGREGAR #}
-		<form action="{{ path('admin_add') }}" method="post">
-			<div class="modal fade " id="aAsesor" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Agregar un nuevo asesor</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-								<div class="form-group row">
-									<label for="example-text-input" class="col-4 col-form-label">Matrícula:</label>
-									<div class="col-8">
-										<input class="form-control" type="text" required="required" id="matricula" name="matricula">
-									</div>
+	</div>
+	{# INICIO MODAL AGREGAR #}
+	<form action="{{ path('admin_add') }}" method="post">
+		<div class="modal fade " id="aAsesor" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Agregar un nuevo asesor</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+							<div class="form-group row">
+								<label for="example-text-input" class="col-4 col-form-label">Matrícula:</label>
+								<div class="col-8">
+									<input class="form-control" type="text" required="required" id="matricula" name="matricula">
 								</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-success btn-sm">Agregar</button>
-						</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-success btn-sm">Agregar</button>
 					</div>
 				</div>
 			</div>
-		</form>
-		{# FIN MODAL #}
-	</div>
+		</div>
+	</form>
+	{# FIN MODAL #}
 {% endblock %}
