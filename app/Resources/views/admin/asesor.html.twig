@@ -1,57 +1,71 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="col-md-10 offset-md-1">
-		<div class="row">
-			<div class="col">
-				{% if app.session.flashbag.peekAll()|length > 0 %}
-					{% for tipo, flashes in app.flashes() %}
-						{% for flash in flashes %}
-						    <div class="alert alert-{{tipo}} alert-dismissible fade show" role="alert">
-						    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-						    		<span aria-hidden="true">&times;</span>
-						    	</button>
-						    	{{ flash }}
-						    </div>
-						{% endfor %}
+	<div class="row">
+		<div class="col">
+			{% if app.session.flashbag.peekAll()|length > 0 %}
+				{% for tipo, flashes in app.flashes() %}
+					{% for flash in flashes %}
+					    <div class="alert alert-{{tipo}} alert-dismissible fade show" role="alert">
+					    	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					    		<span aria-hidden="true">&times;</span>
+					    	</button>
+					    	{{ flash }}
+					    </div>
 					{% endfor %}
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>	
+	<div class="row text-center">
+	    <div class="card col">
+	    	<div class="card-header">
+	    	    <h1>HISTORIAL</h1>
+	    	</div>
+			<div class="card-body">
+				<div class="row pb-2">
+					<div class="col text-left">
+						<h5><strong>Asesor:</strong> {{ asesor_nombre }}</h5>
+					</div>
+				</div>
+				{% if citas|length > 0 %}
+					<table class="table table-bordered table-striped">
+						<thead>
+					    	<tr>
+					    		<th>ID</th>
+					      		<th>Tema(s)</th>
+								<th>Materia</th>
+								<th>Cantidad</th>
+								<th>Alumno</th>
+								<th>Estado</th>
+					    	</tr>
+					  	</thead>
+						<tbody>
+							{% set i = 0 %}
+							{% for cita in citas %}
+								<tr>
+									<td>{{ cita.id }}</td>
+									<td>{{ cita.tema }}</td>
+									<td>{{ cita.materia }}</td>
+									<td>{{ cita.cantidad }}</td>
+									<td>{{ nombres[i] }}</td>
+									<td>{{ cita.estado }}</td>
+								</tr>
+								{% set i = i + 1 %}
+							{% endfor %}
+					  	</tbody>
+					</table>
+				{% else %}
+					<div class="row">
+						<div class="col">
+							<div class="alert alert-danger">
+								<p class="lead">El historial del asesor se encuentra {{"vacío"}}, no cuenta con ninguna cita. <br/>
+								Para volver haga click <a href="{{ path("admin_home") }}">{{"aquí"}}</a></p>
+							</div>
+						</div>
+					</div>
 				{% endif %}
 			</div>
-		</div>
-		<div class="row">
-		    <div class="col"><h1 class="text-center"> Historial </h1></div>
-		</div>
-		<div class="row">
-			<table class="table table-bordered table-striped table-responsive">
-				<thead>
-			    	<tr>
-			    		<th>ID</th>
-			      		<th>Tema</th>
-						<th>Materia</th>
-						<th>Cantidad</th>
-						<th>Alumno</th>
-						<th>Estado</th>
-						<th>Detalles</th>
-			    	</tr>
-			  	</thead>
-				<tbody>
-					{% set i = 0 %}
-					{% for cita in citas %}
-						<tr>
-							<td>{{ cita.id }}</td>
-							<td>{{ cita.tema }}</td>
-							<td>{{ cita.materia }}</td>
-							<td>{{ cita.cantidad }}</td>
-							<td>{{ nombres[i] }}</td>
-							<td>{{ cita.estado }}</td>
-							<td class="col col-sm-1 text-center">
-								<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#">Ver</button>
-							</td>
-						</tr>
-						{% set i = i + 1 %}
-					{% endfor %}
-			  	</tbody>
-			</table>
 		</div>
 	</div>
 {% endblock %}

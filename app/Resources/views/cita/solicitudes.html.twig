@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="row text-center">
-    <div class="card col-12">
+    <div class="card col">
         <div class="card-header">
-            <h1>Solicitudes
+            <h1>SOLICITUDES
                 {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 
                 {% endif %}
