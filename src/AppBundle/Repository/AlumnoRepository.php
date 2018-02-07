@@ -20,4 +20,14 @@ class AlumnoRepository extends \Doctrine\ORM\EntityRepository
 			->setParameter("user", $user->getId())
 			->getOneOrNullResult();
 	}
+
+	public function findByHasUser($alumno)
+	{
+		return $this->getEntityManager()
+			->createQuery(
+				'SELECT u FROM AppBundle:User u JOIN u.alumnos ass WHERE ass = :alumno'
+			)
+			->setParameter("alumno", $alumno)
+			->getOneOrNullResult();
+	}
 }

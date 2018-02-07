@@ -72,9 +72,8 @@ class AdministradorController extends Controller
     public function removeAction($id){
 
     	$user = $this->getUser();
-    	$alumno = $this->getDoctrine()
-    	        ->getRepository(Alumno::class)
-    	        ->find($id);
+        $repository = $this->getDoctrine()->getRepository(Alumno::class);
+    	$alumno = $repository->find($id);
 
     	$user->removeAlumno($alumno);
     	$alumno->removeUser($user);
@@ -83,6 +82,13 @@ class AdministradorController extends Controller
     	$em->persist($user);
     	$em->persist($alumno);
     	$em->flush();
+
+        $admin = $repository->findByHasUser($alumno);
+        if($admin == null){
+            $alumno->setAsesor(false);
+            $em->persist($alumno);
+            $em->flush();
+        }
 
         $this->addFlash('success','El asesor fue eliminado correctamente.');
     	return $this->redirectToRoute('admin_home');
