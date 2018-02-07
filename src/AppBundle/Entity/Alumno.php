@@ -202,6 +202,7 @@ class Alumno implements UserInterface, \Serializable
     public function __construct()
     {
         $this->horarios = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->citas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));

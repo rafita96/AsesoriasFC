@@ -62,6 +62,7 @@ class AdministradorController extends Controller
             }
         }
         $this->addFlash('success','El asesor fue agregado correctamente.');
+        $alumno->setAsesor(true);
         $user->addAlumno($alumno);
         $alumno->addUser($user);
 

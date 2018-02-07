@@ -1,5 +1,14 @@
 var seleccionado = null;
 $(document).ready(function () {
+    
+    if(dibujar){
+        dibujarHorario();
+    }
+
+    // agregarFechasDisponibles(disponibilidad);
+});
+
+function dibujarHorario(){
     var fechas = new Array(0,0,0,0,0);
     for(var i = 0; i < 7; i++){
         var res = (i+dia.getDay())%7;
@@ -53,30 +62,32 @@ $(document).ready(function () {
                     var hora = Math.floor(index/5)*2 + 8;
                     td.hora = hora == 0 ? 12 : hora;
 
-                    td.addEventListener('click', function(){
-                        
-                        if(this.seleccionado){
-                            this.seleccionado = false;
-
-                            seleccionado = null;
-                            this.setAttribute("class", "col-1 bg-info");
-                        }else{
-                            this.seleccionado = true;
-
-                            // Seleccionado anterior
-                            if(seleccionado != null){
-                                seleccionado.setAttribute("class", "col-1 bg-info");
-                                seleccionado.seleccionado = false;
-                            }
-                            seleccionado = this;
-
-                            this.setAttribute("class", "col-1 bg-warning");
+                    if(!isAlumno){
+                        td.addEventListener('click', function(){
                             
-                            $("#fecha_input").val(this.fecha);
-                            $("#hora_input").val(this.hora);
-                        }
+                            if(this.seleccionado){
+                                this.seleccionado = false;
 
-                    });
+                                seleccionado = null;
+                                this.setAttribute("class", "col-1 bg-info");
+                            }else{
+                                this.seleccionado = true;
+
+                                // Seleccionado anterior
+                                if(seleccionado != null){
+                                    seleccionado.setAttribute("class", "col-1 bg-info");
+                                    seleccionado.seleccionado = false;
+                                }
+                                seleccionado = this;
+
+                                this.setAttribute("class", "col-1 bg-warning");
+                                
+                                $("#fecha_input").val(this.fecha);
+                                $("#hora_input").val(this.hora);
+                            }
+
+                        });
+                    }
 
                     horario.splice(0, 1);
                 } 
@@ -88,9 +99,7 @@ $(document).ready(function () {
     }
 
     tabla.appendChild(tbody);
-
-    // agregarFechasDisponibles(disponibilidad);
-});
+}
 
 function agregarEncabezado(tr, dia, fecha){
     var th = document.createElement("th");
