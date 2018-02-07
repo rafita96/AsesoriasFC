@@ -13,7 +13,7 @@ class AdministradorController extends Controller
 {
 
     /**
-     * @Route("/admin", name="admin_home")
+     * @Route("/admin/", name="admin_home")
      */
     public function homeAction(){
 
@@ -30,7 +30,7 @@ class AdministradorController extends Controller
     }
 
     /**
-	 * @Route("/admin/add", name="admin_add")
+	 * @Route("/admin/add/", name="admin_add")
      */
     public function addAction(Request $request){
         $matricula = $request->request->get('matricula');
