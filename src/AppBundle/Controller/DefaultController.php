@@ -24,9 +24,11 @@ class DefaultController extends Controller
             }
         }
 
+        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles)){
+            return $this->redirectToRoute('admin_home');
+        }
+
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        return $this->redirectToRoute('citas');
     }
 }

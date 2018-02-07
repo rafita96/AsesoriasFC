@@ -156,7 +156,7 @@ class CitaController extends Controller
                 $em->flush();
             }
             $repository = $this->getDoctrine()->getRepository(Cita::class);
-            $citas = $repository->findByEstado(Cita::PENDIENTE);
+            $citas = $repository->findByEstado(0);
 
             return $this->render('cita/solicitudes.html.twig', array(
                 'citas' => $citas,
@@ -220,7 +220,7 @@ class CitaController extends Controller
         $cita->setExpiracion($expiracion);
         $cita->setAsesor($this->getUser());
 
-        $cita->setEstado(Cita::CITADO);
+        $cita->setEstado($cita->CITADO);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($cita);

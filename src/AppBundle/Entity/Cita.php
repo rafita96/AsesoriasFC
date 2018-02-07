@@ -43,10 +43,10 @@ class Cita
      */
     private $cantidad;
 
-    public const PENDIENTE = 0;
-    public const CITADO = 1;
-    public const FINALIZADO = 2;
-    public const EXPIRADO = 3;
+    public $PENDIENTE = 0;
+    public $CITADO = 1;
+    public $FINALIZADO = 2;
+    public $EXPIRADO = 3;
     
     /**
      * @var int
