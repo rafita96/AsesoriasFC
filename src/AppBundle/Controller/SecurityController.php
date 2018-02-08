@@ -26,6 +26,10 @@ class SecurityController extends BaseController {
 
     public function renderLogin(array $data) {
 
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $request = $this->requestStack->getCurrentRequest();
         $requestAttributes = $request->attributes;
         $template = sprintf('FOSUserBundle:Security:login.html.twig');
@@ -37,7 +41,11 @@ class SecurityController extends BaseController {
      * @Route("/login", name="login")
      */
     public function newAction(Request $request)
-    {   
+    {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('homepage');
+        }
+           
         return $this->render('security/login.html.twig');
     }
 }
