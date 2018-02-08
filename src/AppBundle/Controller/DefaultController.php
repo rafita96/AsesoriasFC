@@ -24,7 +24,12 @@ class DefaultController extends Controller
             }
         }
 
-        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles)){
+        if(in_array("ROLE_SUPER_ADMIN", $roles))
+        {
+            return $this->redirectToRoute('administradores');
+        }
+
+        if(in_array("ROLE_ADMIN", $roles)){
             return $this->redirectToRoute('admin_home');
         }
 

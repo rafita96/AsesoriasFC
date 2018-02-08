@@ -21,13 +21,18 @@
 	    <div class="card col-12">
 	    	<div class="card-header">
 	    	    <h1>ASESORES</h1>
+	    	    {% if admin != null %}
+	    	    <h3>{{ admin.nombre ~ " " ~ admin.aPaterno ~ " " ~ admin.aMaterno }}</h3>
+	    	    {% endif %}
 	    	</div>
 			<div class="card-body">
+				{% if not is_granted('ROLE_SUPER_ADMIN') %}
 				<div class="row pb-2">
 					<div class="col">
 						<button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#aAsesor">Agregar</button>
 					</div>
 				</div>
+				{% endif %}
 				<table class="table table-bordered table-striped">
 					<thead>
 				    	<tr>
@@ -36,7 +41,9 @@
 							<th>Apellido Paterno</th>
 							<th>Apellido Materno</th>
 							<th>Perfil</th>
+							{% if not is_granted('ROLE_SUPER_ADMIN') %}
 							<th>Eliminar</th>
+							{% endif %}
 				    	</tr>
 				  	</thead>
 					<tbody>
@@ -47,9 +54,12 @@
 								<td>{{ asesor.apaterno }}</td>
 								<td>{{ asesor.amaterno }}</td>
 								<td><a href="{{ path('admin_asesor', {'matricula': asesor.matricula }) }}" class="btn btn-primary">Perfil</a></td>
+
+								{% if not is_granted('ROLE_SUPER_ADMIN') %}
 								<td class="col col-sm-1 text-center">
 									<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eAsesor{{asesor.id}}"><i class="fas fa-trash-alt"></i></button>
 								</td>
+								{% endif %}
 							</tr>
 							{# INICIO MODAL ELIMINAR #}
 							<div class="modal fade" id="eAsesor{{asesor.id}}" tabindex="-1" role="dialog" aria-hidden="true">

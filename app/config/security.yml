@@ -68,5 +68,6 @@ security:
         - { path: ^/registro, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/reset, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/super/admin/, role: ROLE_SUPER_ADMIN }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/, role: ROLE_USER }
