@@ -20,7 +20,7 @@
             <label for="username" class="sr-only">{{"Matrícula"}}</label>
 
             <div class="input-group mb-3">
-                <input class="form-control" type="text" id="username" name="_username" required="required" placeholder="{{'Matrícula'}}" />
+                <input class="form-control" type="text" id="username" name="_username" required="required" placeholder="{{'Matrícula'}}" minlength="6" maxlength="8" pattern="^[0-9]+$" />
                 <div class="input-group-append">
                     <input type="submit" id="_submit" class="btn btn-lg btn-success btn-block" name="_submit" value="Entrar" />
                 </div>
@@ -28,4 +28,18 @@
         </form>
     </div>
 </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#username").oninvalid = function () {
+                this.setCustomValidity("Una matrícula solamente debe contener números.");
+                this.setCustomValidity("");
+            };
+        });
+    </script>
 {% endblock %}

@@ -26,6 +26,7 @@ class Alumno implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\Regex("/^[0-9]+$/")
      * @Assert\Length(
      *      min = 6,
      *      max = 8

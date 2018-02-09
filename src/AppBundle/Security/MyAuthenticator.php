@@ -30,6 +30,13 @@ class MyAuthenticator implements SimpleFormAuthenticatorInterface
             throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
+        if(!preg_match("/^[0-9]+$/",$user->getUsername()) || 
+            strlen($user->getUsername()) < 6 ||
+            strlen($user->getUsername()) > 8)
+        {
+            throw new CustomUserMessageAuthenticationException('Matrícula inválida');
+        }
+
         return new UsernamePasswordToken(
             $user,
             $user->getUsername(),
