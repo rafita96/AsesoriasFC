@@ -11,14 +11,14 @@
             </h1>
         </div>
         <div class="card-body">
-            {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+            {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
             <div class="row pb-2"><div class="col"><a class="btn btn-primary float-right" href="{{path('citas_new')}}">Nueva</a></div></div>{% endif %}
             <table class="table table-bordered table-striped">
                 <thead>
                     <th class="col-5">Materia</th>
                     <th class="col-5">Tema</th>
                     <th class="col-1">Detalles</th>
-                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+                    {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
                         <th class="col-1">{{"Acción"}}</th>
                     {% endif %}
                 </thead>
@@ -31,7 +31,7 @@
                                 <a class="btn btn-secondary" href="{{ path('solicitudes_detalles',{'id': cita.id }) }}">Ver</a>
 	                            {#<button class="btn btn-secondary" data-toggle="modal" data-target="#infoModal{{cita.id}}">Ver</button>#}
 	                        </td>
-	                        {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
+	                        {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 	                            <td>
 	                                <button class="btn btn-danger" data-url="{{ path('citas_eliminar', { 'id': cita.id }) }}" data-toggle="modal" data-target="#eliminarModal">Eliminar</button>
 	                            </td>

@@ -23,22 +23,22 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li class="nav-item"><a class="nav-link" href="">Administradores</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('administradores') }}">Administradores</a></li>
                     {% endif %}
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('admin_home') }}">Asesores</a></li>
                     {% endif %}
 
-                    {% if is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and app.user.asesor) %}
-                        <li class="nav-item"><a class="nav-link" href="{{ path('solicitudes') }}">Solicitudes</a></li>
-                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{{ path('solicitudes') }}">Solicitudes</a></li>
 
-                    {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') %}
+                    {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_USER') %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('citas') }}">Citas</a></li>
                     {% endif %}
+
+                    {% if not is_granted('ROLE_SUPER_ADMIN') %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('perfil_alumno') }}">Perfil</a></li>
-                    
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('fos_user_security_logout') }}">{{"Cerrar Sesión"}}</a>
                     </li>
