@@ -30,4 +30,56 @@ class CitaRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter("alumno", $alumno)
             ->getResult();
     }
+
+    public function findByDisponibles($now)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.expiracion > :now and c.asesor is NULL'
+            )
+            ->setParameter("now", $now)
+            ->getResult();
+    }
+
+    public function findByExpiradas($now)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.expiracion <= :now and c.asesor is NULL'
+            )
+            ->setParameter("now", $now)
+            ->getResult();
+    }
+
+    public function findByRealizadas($now)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.expiracion <= :now and c.asesor is not NULL'
+            )
+            ->setParameter("now", $now)
+            ->getResult();
+    }
+
+    public function findByAsesorRealizadas($asesor, $now)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.expiracion <= :now and c.asesor = :asesor'
+            )
+            ->setParameter("now", $now)
+            ->setParameter("asesor", $asesor)
+            ->getResult();
+    }
+
+    public function findByAsesorPendientes($asesor, $now)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Cita c WHERE c.expiracion > :now and c.asesor = :asesor'
+            )
+            ->setParameter("now", $now)
+            ->setParameter("asesor", $asesor)
+            ->getResult();
+    }
 }

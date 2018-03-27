@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="row text-center">
+    <div class="card col-12">
+        <div class="card-header">
+            <h1>Citas Pendientes
+            </h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th class="col-4">Materia</th>
+                    <th class="col-4">Tema</th>
+                    <th class="col-1">Detalles</th>
+                </thead>
+                <tbody>    
+                    {% for cita in citasPendientes %}
+                        <tr>
+                            <td>{{ cita.materia }}</td>
+                            <td>{{ cita.tema }}</td>
+                            <td><a class="btn btn-secondary" href="{{ path('solicitudes_detalles',{'id': cita.id }) }}">Ver</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card col-12" style="margin-top: 20px;">
+        <div class="card-header">
+            <h1>Citas Realizadas
+            </h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th class="col-4">Materia</th>
+                    <th class="col-4">Tema</th>
+                    <th class="col-1">Detalles</th>
+                </thead>
+                <tbody>    
+                    {% for cita in citasRealizadas %}
+                        <tr>
+                            <td>{{ cita.materia }}</td>
+                            <td>{{ cita.tema }}</td>
+                            <td><a class="btn btn-secondary" href="{{ path('solicitudes_detalles',{'id': cita.id }) }}">Ver</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('resources/js/citas/lista.js') }}"></script>
+{% endblock %}

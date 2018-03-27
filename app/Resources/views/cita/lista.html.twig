@@ -5,7 +5,7 @@
     {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
         <div class="card col-12">
             <div class="card-header">
-                <h1>PENDIENTES
+                <h1>Citas Pendientes
                     
                 </h1>
             </div>
@@ -42,9 +42,9 @@
             </div>
         </div>
     {% endif %}
-        <div class="card col-12">
+        <div class="card col-12" style="margin-top:20px;">
             <div class="card-header">
-                <h1>CITAS
+                <h1>Citas Realizadas
                     {% if not is_granted('ROLE_ADMIN') and is_granted('ROLE_USER') and not app.user.asesor %}
 
                     {% endif %}

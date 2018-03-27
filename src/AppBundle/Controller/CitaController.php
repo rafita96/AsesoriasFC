@@ -39,34 +39,45 @@ class CitaController extends Controller
             $cita->setAlumno($alumno);
             $cita->setEstado($cita->PENDIENTE);
 
+            // Matriz de dias:
+            // 0 al 4 son los dias lunes a viernes de 8 a 10
+            // 5 al 9 son los dias lunes a viernes de 10 a 12
+            // 10 al 14 son los dias lunes a viernes de 12 a 2
+            // 15 al 19 son los dias lunes a viernes de 2 a 4
+            // 20 al 24 son los dias lunes a viernes de 4 a 6
             $horario = json_decode("[".$cita->getHorario()."]");
-            sort($horario);
+            // Se ordenan de menor a mayor
+            sort($horario, SORT_NUMERIC);
             $cita = $cita->setHorario($horario);
 
-            $max = $horario[0];
-            foreach ($cita->getHorario() as $indice) {
-                if($indice%5 == $max%5 && $indice > $max){
-                    $max = $indice;
-                }
-                else if($indice%5 > $max%5){
-                    $max = $indice;    
-                }
-            }
-
+            // Partiendo del dia de hoy...
             date_default_timezone_set('America/Tijuana');
             $expiracion = new \DateTime();
-            $dia = intval($expiracion->format('w'));
+            // Lunes=0 ... Viernes=4
+            $dia = intval($expiracion->format('w')) - 1;
 
-            if($dia > $max%5){
-                $suma = (7 - $dia) + $max%5 + 1;
-            }else{
-                $suma = $dia - $max%5 + 1;
+            // Debemos encontrar cuantos dias faltan para llegar al ultimo dia seleccionado
+            $max = 0;
+            $hora = 0;
+            foreach ($cita->getHorario() as $dia_hora) {
+                // Si el dia es menor al dia actual en realidad significa que es mayor.
+                if($dia_hora%5 < $dia){
+                    $tiempo = 6 - $dia_hora%5;
+                    if($tiempo > $max){
+                        $max = $tiempo;
+                        $hora = floor($dia_hora/5)*2 + 8;
+                    }
+                }else{
+                    // Si el dia es mayor al maximo, entonces se actualiza
+                    if($dia_hora%5 > $max){
+                        $max = $dia_hora%5;
+                        $hora = floor($dia_hora/5)*2 + 8;
+                    }
+                }
             }
-            $expiracion->modify("+".$suma." days");
 
-            $hora = floor($max/5)*2 + 8;
+            $expiracion->modify("+".$max." days");
             $expiracion->setTime($hora, 0, 0);
-            
             $cita->setExpiracion($expiracion);
 
             $em = $this->getDoctrine()->getManager();
@@ -83,16 +94,26 @@ class CitaController extends Controller
 
     /**
      * @Route("/citas/", name="citas")
+     *
+     *
      */
     public function verAction(Request $request){
+        $today = new \DateTime();
+        $roles = $this->getUser()->getRoles();
+        if(in_array("ROLE_ADMIN", $roles) || in_array("ROLE_SUPER_ADMIN", $roles)){
+            return $this->redirectToRoute('homepage');
+        }
+
         if ($this->getUser()->getAsesor()) {
             $asesor = $this->getUser();
             
             $repository = $this->getDoctrine()->getRepository(Cita::class);
-            $citas = $repository->findByAsesor($asesor);
+            $citasRealizadas = $repository->findByAsesorRealizadas($asesor, $today);
+            $citasPendientes = $repository->findByAsesorPendientes($asesor, $today);
 
-            return $this->render('cita/lista.html.twig', array(
-                'citas' => $citas,
+            return $this->render('cita/lista_asesor.html.twig', array(
+                'citasRealizadas' => $citasRealizadas,
+                'citasPendientes' => $citasPendientes
             ));
         }
         $alumno = $this->getUser();
@@ -156,7 +177,9 @@ class CitaController extends Controller
                 $em->flush();
             }
             $repository = $this->getDoctrine()->getRepository(Cita::class);
-            $citas = $repository->findByEstado(0);
+            date_default_timezone_set('America/Tijuana');
+            $today = new \DateTime();
+            $citas = $repository->findByDisponibles($today);
 
             return $this->render('cita/solicitudes.html.twig', array(
                 'citas' => $citas,
